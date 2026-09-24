@@ -26,34 +26,67 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { $email = trim($_POST['email'] ?? ''
         } 
     } 
 ?> 
-<!DOCTYPE html> 
-<html lang="pt-BR"> 
-    <head> 
-        <meta charset="UTF-8"> 
-        <title>Autenticação — Portal SI</title> 
-    </head> 
-    <body> 
-        <h2>Acesso ao Painel Administrativo</h2> 
-        <?php if (!empty($erro)): ?> 
-        <p style="color: #b71c1c; font-weight: bold;"><?= htmlspecialchars($erro, ENT_QUOTES, 'UTF-8'); ?></p> 
-        <?php endif; ?> 
-        <?php if (isset($_GET['sucesso']) && $_GET['sucesso'] === 'cadastrado'): ?> 
-        <p style="color: #2e7d32;">Cadastro realizado com sucesso! Efetue seu login.</p> 
-        <?php endif; ?> 
-        <form action="login.php" method="POST"> 
-            <div> 
-                <label for="email">E-mail:</label>
-                <br> 
-                <input type="email" id="email" name="email" required> 
-            </div> 
-                <br> 
-                <div> 
-                <label for="senha">Senha:</label>
-                <br> 
-                <input type="password" id="senha" name="senha" required> 
-            </div> 
-            <br> 
-            <button type="submit">Entrar no Sistema</button> 
-        </form> 
-    </body> 
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Autenticação — Portal SI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+        }
+        .btn-marca-azul {
+            background-color: #12294B;
+            color: #ffffff;
+            border: none;
+        }
+        .btn-marca-azul:hover,
+        .btn-marca-azul:focus {
+            background-color: #0d1f3a;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-dark mb-4" style="background-color: #12294B;">
+        <div class="container">
+            <span class="navbar-brand">Portal SI</span>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-5">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title mb-4">Acesso ao Painel Administrativo</h2>
+
+                        <?php if (!empty($erro)): ?>
+                        <div class="alert alert-danger"><?= htmlspecialchars($erro, ENT_QUOTES, 'UTF-8'); ?></div>
+                        <?php endif; ?>
+
+                        <?php if (isset($_GET['sucesso']) && $_GET['sucesso'] === 'cadastrado'): ?>
+                        <div class="alert alert-success">Cadastro realizado com sucesso! Efetue seu login.</div>
+                        <?php endif; ?>
+
+                        <form action="login.php" method="POST">
+                            <div class="mb-3">
+                                <label for="email" class="form-label">E-mail:</label>
+                                <input type="email" id="email" name="email" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="senha" class="form-label">Senha:</label>
+                                <input type="password" id="senha" name="senha" class="form-control" required>
+                            </div>
+                            <button type="submit" class="btn btn-marca-azul w-100">Entrar no Sistema</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
 </html>
