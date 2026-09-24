@@ -46,45 +46,77 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } 
     } 
 ?> 
-<!DOCTYPE html> 
-<html lang="pt-BR"> 
-    <head> 
-        <meta charset="UTF-8"> 
-        <title>Cadastro — Portal SI</title> 
-    </head> 
-    <body> 
-        <h2>Cadastro de Novo Usuário</h2> 
-        <?php if (!empty($erros)): ?> 
-        <div style="color: #b71c1c;"> 
-            <ul> 
-                <?php foreach ($erros as $erro): ?> 
-            <li>
-                <?= htmlspecialchars($erro, ENT_QUOTES, 'UTF-8'); ?>
-            </li> 
-                <?php endforeach; ?> 
-            </ul> 
-        </div> 
-        <?php endif; ?> 
-        <form action="cadastro.php" method="POST"> 
-            <div> 
-                <label for="nome">Nome Completo:</label><br> 
-                <input type="text" id="nome" name="nome" value="
-                <?= htmlspecialchars($nome, ENT_QUOTES, 'UTF-8'); ?>" required> 
-            </div> 
-            <div> 
-                <label for="email">E-mail Institucional:</label><br> 
-                <input type="email" id="email" name="email" value="<?= htmlspecialchars($email, ENT_QUOTES, 'UTF-8'); ?>" required> </div> 
-            <div> 
-                <label for="senha">Senha (mínimo 8 caracteres):</label>
-                <br> 
-                <input type="password" id="senha" name="senha" required> 
-            </div> 
-            <div> 
-                <label for="senha_confirmacao">Confirme a Senha:</label><br> 
-                <input type="password" id="senha_confirmacao" name="senha_confirmacao" required> 
-            </div> 
-            <br> 
-            <button type="submit">Cadastrar Usuário</button> 
-        </form> 
-    </body> 
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cadastro — Portal SI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+        }
+        .btn-marca-azul {
+            background-color: #12294B;
+            color: #ffffff;
+            border: none;
+        }
+        .btn-marca-azul:hover,
+        .btn-marca-azul:focus {
+            background-color: #0d1f3a;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-dark mb-4" style="background-color: #12294B;">
+        <div class="container">
+            <span class="navbar-brand">Portal SI</span>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-5">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title mb-4">Cadastro de Novo Usuário</h2>
+
+                        <?php if (!empty($erros)): ?>
+                        <div class="alert alert-danger">
+                            <ul class="mb-0">
+                                <?php foreach ($erros as $erro): ?>
+                                <li><?= htmlspecialchars($erro, ENT_QUOTES, 'UTF-8'); ?></li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </div>
+                        <?php endif; ?>
+
+                        <form action="cadastro.php" method="POST">
+                            <div class="mb-3">
+                                <label for="nome" class="form-label">Nome Completo:</label>
+                                <input type="text" id="nome" name="nome" class="form-control" value="<?= htmlspecialchars($nome, ENT_QUOTES, 'UTF-8'); ?>" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">E-mail Institucional:</label>
+                                <input type="email" id="email" name="email" class="form-control" value="<?= htmlspecialchars($email, ENT_QUOTES, 'UTF-8'); ?>" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="senha" class="form-label">Senha (mínimo 8 caracteres):</label>
+                                <input type="password" id="senha" name="senha" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="senha_confirmacao" class="form-label">Confirme a Senha:</label>
+                                <input type="password" id="senha_confirmacao" name="senha_confirmacao" class="form-control" required>
+                            </div>
+                            <button type="submit" class="btn btn-marca-azul w-100">Cadastrar Usuário</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
 </html>
