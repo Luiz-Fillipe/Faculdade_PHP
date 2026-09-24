@@ -7,11 +7,11 @@ $nome = '';
 $email = ''; 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') { 
-    // 1. Sanitização básica dos campos textuais 
+
     $nome = trim($_POST['nome'] ?? ''); $email = trim($_POST['email'] ?? ''); 
     $senha = $_POST['senha'] ?? ''; 
     $senha_confirmacao = $_POST['senha_confirmacao'] ?? ''; 
-    // 2. Validações server-side 
+    /*Validações server-side*/
     if (mb_strlen($nome) < 3) { 
         $erros[] = "O nome deve conter ao menos 3 caracteres."; 
     } 
@@ -24,19 +24,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($senha !== $senha_confirmacao) { 
         $erros[] = "A confirmação de senha não confere com a senha informada."; 
     } 
-    // 3. Persistência caso não haja erros de validação 
+    /*Persistência caso não haja erros de validação*/ 
     if (empty($erros)) { 
-        try { // Geração do hash seguro utilizando o algoritmo padrão (Bcrypt) 
+        try { /*Geração do hash seguro utilizando o algoritmo padrão (Bcrypt)*/ 
             $senhaHash = password_hash($senha, PASSWORD_DEFAULT); 
-            $sql = "INSERT INTO usuarios (nome, email, senha_hash, perfil, status) VALUES (:nome, :email, :senha_hash, 'aluno', 'ativo')"; 
+            $sql = "INSERT INTO usuarios (nome, email, senha_hash, perfil, status) VALUES (:nome, :email, :senha_hash, 'Coordenador', 'ativo')"; 
             $stmt = $pdo->prepare($sql); 
             $stmt->bindValue(':nome', $nome, PDO::PARAM_STR); 
             $stmt->bindValue(':email', $email, PDO::PARAM_STR);
             $stmt->bindValue(':senha_hash', $senhaHash, PDO::PARAM_STR); 
             $stmt->execute(); 
-            // Redirecionamento com flag de sucesso 
             header('Location: login.php?sucesso=cadastrado'); exit; } 
-            catch (PDOException $e) { // Código 23505 indica violação de constraint UNIQUE no PostgreSQL 
+            catch (PDOException $e) {
                 if ($e->getCode() === '23505') { 
                     $erros[] = "O e-mail informado já está cadastrado no sistema."; 
                 } else { 

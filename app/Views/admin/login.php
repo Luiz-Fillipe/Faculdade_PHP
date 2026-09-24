@@ -1,26 +1,23 @@
-<?php 
-// admin/login.php 
+<?php  
 session_start(); 
 require_once __DIR__ . '/../../../config/database.php'; 
 $erro = ''; 
-// Se já estiver logado, redireciona diretamente ao dashboard 
 if (isset($_SESSION['usuario_id'])) { header('Location: dashboard.php'); exit; } 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') { $email = trim($_POST['email'] ?? ''); 
     $senha = $_POST['senha'] ?? ''; 
-    if (empty($email) || empty($senha)) { $erro = "Preencha todos os campos para prosseguir."; } else { // Consulta buscando apenas contas ativas 
+    if (empty($email) || empty($senha)) { $erro = "Preencha todos os campos para prosseguir."; } else {
         $sql = "SELECT id, nome, email, senha_hash, perfil FROM usuarios WHERE email = :email AND status = 'ativo' LIMIT 1"; 
         $stmt = $pdo->prepare($sql); 
         $stmt->bindValue(':email', $email, PDO::PARAM_STR); 
         $stmt->execute(); 
-        $usuario = $stmt->fetch(PDO::FETCH_ASSOC); // Verificação segura: password_verify valida contra o hash armazenado 
-        if ($usuario && password_verify($senha, $usuario['senha_hash'])) { // Prevenção de Fixação de Sessão session_regenerate_id(true);
-        // Definição dos dados da sessão autenticada 
+        $usuario = $stmt->fetch(PDO::FETCH_ASSOC); 
+        if ($usuario && password_verify($senha, $usuario['senha_hash'])) {
             $_SESSION['usuario_id'] = (int)$usuario['id']; 
             $_SESSION['usuario_nome'] = $usuario['nome']; 
             $_SESSION['usuario_email'] = $usuario['email']; 
             $_SESSION['usuario_perfil'] = $usuario['perfil']; 
             $_SESSION['ultimo_acesso'] = time(); 
-            header('Location: dashboard.php'); exit; } else { // Mensagem intencionalmente genérica para evitar enumeração de usuários 
+            header('Location: dashboard.php'); exit; } else { 
             $erro = "E-mail ou senha inválidos."; 
             } 
         } 
@@ -70,6 +67,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { $email = trim($_POST['email'] ?? ''
 
                         <?php if (isset($_GET['sucesso']) && $_GET['sucesso'] === 'cadastrado'): ?>
                         <div class="alert alert-success">Cadastro realizado com sucesso! Efetue seu login.</div>
+                        <?php endif; ?>
+
+                        <?php if (isset($_GET['msg']) && $_GET['msg'] === 'logout'): ?>
+                            <div class="alert alert-success">
+                                Sessão encerrada com sucesso!
+                            </div>
                         <?php endif; ?>
 
                         <form action="login.php" method="POST">

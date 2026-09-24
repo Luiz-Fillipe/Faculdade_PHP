@@ -4,7 +4,7 @@ CREATE TABLE usuarios (
     email VARCHAR(150) UNIQUE NOT NULL,
     senha_hash VARCHAR(255) NOT NULL,
     perfil VARCHAR(20) NOT NULL
-        CHECK (perfil IN ('admin', 'editor', 'aluno')),
+        CHECK (perfil IN ('Admin', 'Editor', 'Coordenador', 'Aluno')),
     status VARCHAR(20) NOT NULL DEFAULT 'ativo'
         CHECK (status IN ('ativo', 'inativo')),
     criado_em TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
