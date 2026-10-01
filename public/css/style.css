@@ -1,1 +1,522 @@
 
+/* =====================================================
+   PORTAL SI — CSS3
+   Flexbox + Media Queries (sem JS, sem framework)
+   Breakpoints: Tablet 1024px · Celular 767px
+   ===================================================== */
+
+/* ---------- RESET ---------- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ---------- VARIÁVEIS ---------- */
+:root {
+    --cor-primaria:   #1a5276;
+    --cor-secundaria: #2e86c1;
+    --cor-destaque:   #e74c3c;
+    --cor-texto:      #2c3e50;
+    --cor-suave:      #7f8c8d;
+    --cor-fundo:      #f4f6f7;
+    --cor-branca:     #ffffff;
+    --sombra:         0 2px 10px rgba(0, 0, 0, 0.10);
+    --raio:           8px;
+}
+
+/* ---------- BASE ---------- */
+body {
+    font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+    color: var(--cor-texto);
+    background: var(--cor-fundo);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* =====================================================
+   TOPO (FLEXBOX)
+   ===================================================== */
+.topo {
+    background: var(--cor-primaria);
+    color: var(--cor-branca);
+    padding: 18px 0;
+}
+
+.topo-flex {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: var(--cor-branca);
+}
+
+.logo-sigla {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    background: var(--cor-destaque);
+    border-radius: var(--raio);
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.logo-texto {
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+
+.topo-frase {
+    font-size: 0.95rem;
+    opacity: 0.85;
+}
+
+/* =====================================================
+   MENU DINÂMICO (FLEXBOX)
+   ===================================================== */
+.menu {
+    background: var(--cor-secundaria);
+}
+
+.menu-lista {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    list-style: none;
+}
+
+.menu-lista a {
+    display: block;
+    padding: 14px 22px;
+    color: var(--cor-branca);
+    text-decoration: none;
+    font-weight: 500;
+    transition: background 0.3s;
+}
+
+.menu-lista a:hover,
+.menu-lista a.ativo {
+    background: var(--cor-destaque);
+}
+
+/* =====================================================
+   HERO DE DESTAQUE
+   ===================================================== */
+.hero {
+    background: linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria));
+    color: var(--cor-branca);
+    padding: 70px 0;
+    text-align: center;
+}
+
+.hero-categoria {
+    padding: 50px 0;
+}
+
+.hero-tag {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 6px 16px;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    margin-bottom: 18px;
+}
+
+.hero-titulo {
+    font-size: 2.4rem;
+    margin-bottom: 14px;
+}
+
+.hero-resumo {
+    max-width: 640px;
+    margin: 0 auto 12px;
+    font-size: 1.1rem;
+    opacity: 0.92;
+}
+
+.hero-data {
+    font-size: 0.9rem;
+    opacity: 0.75;
+    margin-bottom: 24px;
+}
+
+/* ---------- BOTÕES ---------- */
+.botao {
+    display: inline-block;
+    padding: 12px 30px;
+    border-radius: var(--raio);
+    text-decoration: none;
+    font-weight: bold;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.botao-claro {
+    background: var(--cor-branca);
+    color: var(--cor-primaria);
+}
+
+.botao:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+}
+
+.botao-pequeno {
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    background: var(--cor-secundaria);
+    color: var(--cor-branca);
+    border-radius: var(--raio);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* =====================================================
+   SEÇÕES
+   ===================================================== */
+.secao-publicacoes {
+    padding: 60px 0;
+}
+
+.secao-eventos {
+    padding-bottom: 60px;
+}
+
+.secao-titulo {
+    text-align: center;
+    font-size: 2rem;
+    color: var(--cor-primaria);
+    margin-bottom: 6px;
+}
+
+.secao-subtitulo {
+    text-align: center;
+    color: var(--cor-suave);
+    margin-bottom: 36px;
+}
+
+/* =====================================================
+   GRADE DE CARDS (FLEXBOX — 3 colunas no desktop)
+   ===================================================== */
+.grade {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+}
+
+.card {
+    flex: 0 1 calc(33.333% - 16px);
+    display: flex;
+    flex-direction: column;
+    background: var(--cor-branca);
+    border-radius: var(--raio);
+    box-shadow: var(--sombra);
+    padding: 24px;
+    border-top: 4px solid var(--cor-secundaria);
+    transition: transform 0.25s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card-categoria {
+    align-self: flex-start;
+    background: #eaf2f8;
+    color: var(--cor-primaria);
+    font-size: 0.78rem;
+    font-weight: bold;
+    padding: 4px 12px;
+    border-radius: 50px;
+    margin-bottom: 14px;
+}
+
+.card-imagem {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: var(--raio);
+    margin-bottom: 16px;
+}
+
+.card-titulo {
+    font-size: 1.15rem;
+    margin-bottom: 10px;
+    color: var(--cor-texto);
+}
+
+.card-resumo {
+    color: var(--cor-suave);
+    font-size: 0.95rem;
+    margin-bottom: 18px;
+    flex: 1;
+}
+
+.card-rodape {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    border-top: 1px solid #ecf0f1;
+    padding-top: 14px;
+}
+
+.card-meta {
+    font-size: 0.8rem;
+    color: var(--cor-suave);
+}
+
+.card-link {
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: var(--cor-secundaria);
+    text-decoration: none;
+}
+
+.card-link:hover {
+    color: var(--cor-destaque);
+}
+
+.grade-vazia {
+    width: 100%;
+    text-align: center;
+    color: var(--cor-suave);
+    padding: 40px 0;
+}
+
+/* =====================================================
+   EVENTOS
+   ===================================================== */
+.evento-lista {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.evento-item {
+    flex: 1 1 280px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: var(--cor-branca);
+    box-shadow: var(--sombra);
+    border-radius: var(--raio);
+    padding: 18px;
+}
+
+.evento-data {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 62px;
+    padding: 10px 6px;
+    background: var(--cor-destaque);
+    color: var(--cor-branca);
+    border-radius: var(--raio);
+}
+
+.evento-dia { font-size: 1.4rem; font-weight: bold; line-height: 1.1; }
+.evento-mes { font-size: 0.75rem; text-transform: uppercase; }
+
+.evento-info { flex: 1; }
+.evento-info h3 { font-size: 1.02rem; margin-bottom: 4px; }
+.evento-info p  { font-size: 0.85rem; color: var(--cor-suave); }
+
+/* =====================================================
+   PÁGINA DE DETALHE
+   ===================================================== */
+.detalhe { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
+.detalhe-titulo { font-size: 1.9rem; margin-bottom: 8px; }
+.detalhe-meta { color: var(--cor-suave); font-size: 0.9rem; margin-bottom: 24px; }
+.detalhe-imagem { width: 100%; border-radius: var(--raio); margin-bottom: 24px; }
+
+.detalhe-corpo {
+    background: var(--cor-branca);
+    box-shadow: var(--sombra);
+    border-radius: var(--raio);
+    padding: 28px;
+    margin-bottom: 24px;
+}
+
+.detalhe-corpo p { margin-bottom: 14px; }
+
+.tag-lista {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.tag {
+    background: #eaf2f8;
+    color: var(--cor-primaria);
+    font-size: 0.78rem;
+    font-weight: bold;
+    padding: 4px 12px;
+    border-radius: 50px;
+}
+
+/* Vídeo 16:9 responsivo (HTML5 puro) */
+.video-wrapper {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    border-radius: var(--raio);
+    margin-bottom: 24px;
+}
+
+.video-wrapper iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+/* =====================================================
+   RODAPÉ (FLEXBOX)
+   ===================================================== */
+.rodape {
+    background: var(--cor-primaria);
+    color: var(--cor-branca);
+    margin-top: auto;
+}
+
+.rodape-flex {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 30px;
+    padding: 45px 20px;
+}
+
+.rodape-bloco {
+    flex: 0 1 280px;
+}
+
+.rodape-titulo {
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+.rodape-subtitulo {
+    margin-bottom: 10px;
+    color: #aed6f1;
+}
+
+.rodape-lista {
+    list-style: none;
+}
+
+.rodape-lista li {
+    margin-bottom: 6px;
+}
+
+.rodape-lista a {
+    color: #d6eaf8;
+    text-decoration: none;
+}
+
+.rodape-lista a:hover {
+    color: var(--cor-branca);
+    text-decoration: underline;
+}
+
+.rodape-copy {
+    background: rgba(0, 0, 0, 0.25);
+    text-align: center;
+    padding: 14px 0;
+    font-size: 0.85rem;
+}
+
+/* =====================================================
+   MEDIA QUERIES — RESPONSIVIDADE
+   ===================================================== */
+
+/* ---------- TABLET: até 1024px ---------- */
+@media (max-width: 1024px) {
+
+    .card {
+        flex: 0 1 calc(50% - 12px);
+    }
+
+    .menu-lista a {
+        padding: 12px 14px;
+        font-size: 0.92rem;
+    }
+
+    .hero-titulo {
+        font-size: 2rem;
+    }
+
+    .rodape-bloco {
+        flex: 0 1 calc(50% - 15px);
+    }
+}
+
+/* ---------- CELULAR: até 767px ---------- */
+@media (max-width: 767px) {
+
+    .topo-flex {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .menu-lista {
+        flex-direction: column;
+    }
+
+    .menu-lista a {
+        text-align: center;
+        padding: 12px;
+    }
+
+    .card {
+        flex: 1 1 100%;
+    }
+
+    .hero {
+        padding: 45px 0;
+    }
+
+    .hero-titulo {
+        font-size: 1.6rem;
+    }
+
+    .hero-resumo {
+        font-size: 1rem;
+    }
+
+    .secao-titulo {
+        font-size: 1.5rem;
+    }
+
+    .evento-item {
+        flex-wrap: wrap;
+    }
+
+    .detalhe-titulo {
+        font-size: 1.5rem;
+    }
+
+    .rodape-flex {
+        flex-direction: column;
+        text-align: center;
+    }
+}
