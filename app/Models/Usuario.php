@@ -50,7 +50,7 @@ $emojisPerfil = [
 ];
 $emojiPerfil = $emojisPerfil[$usuario['perfil']] ?? '👤';
 
-// ---------- Estatísticas do autor ----------
+
 $stmtTotConteudos = $pdo->prepare(
     "SELECT COUNT(*) AS total
      FROM conteudos
@@ -147,7 +147,7 @@ require_once __DIR__ . '/includes/header.php';
 
                         <div class="card-rodape">
                             <span class="card-meta">
-                                📅 <?php echo date('d/m/Y', strtotime($p['publicado_em'])); ?>
+                                 <?php echo date('d/m/Y', strtotime($p['publicado_em'])); ?>
                             </span>
                             <a class="card-link"
                                href="conteudo.php?slug=<?php echo urlencode($p['slug']); ?>">
