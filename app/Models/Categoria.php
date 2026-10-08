@@ -1,7 +1,4 @@
 <?php
-/**
- * PÁGINA DE CATEGORIA — recebe ?slug=noticias (do menu dinâmico)
- */
 
 require_once __DIR__ . '/config/conexao.php';
 
@@ -32,7 +29,7 @@ $stmtConteudos->execute([':categoria_id' => $categoria['id']]);
 $conteudos = $stmtConteudos->fetchAll();
 
 $tituloPagina = $categoria['nome'];
-$slugAtual    = $categoria['slug'];   // marca o link ativo no menu
+$slugAtual    = $categoria['slug'];   
 require_once __DIR__ . '/includes/header.php';
 ?>
 
