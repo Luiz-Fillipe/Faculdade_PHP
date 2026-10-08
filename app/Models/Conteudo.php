@@ -1,7 +1,5 @@
 <?php
-/**
- * PÁGINA DE DETALHE — recebe ?slug=titulo-da-publicacao
- */
+
 
 require_once __DIR__ . '/config/conexao.php';
 
@@ -23,7 +21,7 @@ if (!$conteudo) {
     exit;
 }
 
-// Tags do conteúdo
+
 $stmtTags = $pdo->prepare(
     "SELECT t.nome FROM tags t
      INNER JOIN conteudo_tags ct ON ct.tag_id = t.id
@@ -32,7 +30,7 @@ $stmtTags = $pdo->prepare(
 $stmtTags->execute([':id' => $conteudo['id']]);
 $tags = $stmtTags->fetchAll();
 
-// Extrai o ID do vídeo do YouTube (sem JavaScript)
+
 $videoId = null;
 if (!empty($conteudo['link_youtube'])) {
     $partes = parse_url($conteudo['link_youtube']);
