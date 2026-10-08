@@ -585,6 +585,7 @@ input {
     font-size: 0.84rem;
     line-height: 1.42;
     -webkit-box-orient: vertical;
+    line-clamp: 2;
     -webkit-line-clamp: 2;
 }
 
@@ -1116,7 +1117,9 @@ input {
     font-size: 0.83rem;
     line-height: 1.45;
     -webkit-box-orient: vertical;
+    line-clamp: 2;
     -webkit-line-clamp: 2;
+    
 }
 
 .autor-publicacao-link {
