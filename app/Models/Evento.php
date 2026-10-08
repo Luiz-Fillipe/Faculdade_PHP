@@ -1,13 +1,8 @@
 <?php
-/**
- * EVENTOS — Portal SI
- * - evento.php        → agenda completa (próximos + encerrados)
- * - evento.php?id=X   → detalhe de um evento
- */
 
 require_once __DIR__ . '/config/conexao.php';
 
-// ---------- Funções de data (PHP puro) ----------
+
 function mesAbreviado($n) {
     $meses = [1=>'Jan',2=>'Fev',3=>'Mar',4=>'Abr',5=>'Mai',6=>'Jun',
               7=>'Jul',8=>'Ago',9=>'Set',10=>'Out',11=>'Nov',12=>'Dez'];
@@ -32,12 +27,10 @@ function resumoCurto($texto, $limite = 140) {
     return (($espaco !== false) ? mb_substr($corte, 0, $espaco) : $corte) . '…';
 }
 
-// ---------- ID da URL ----------
+
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
-/* =====================================================
-   MODO DETALHE — evento.php?id=X
-   ===================================================== */
+
 if ($id > 0) {
 
     $stmt = $pdo->prepare(
@@ -49,7 +42,7 @@ if ($id > 0) {
     $stmt->execute([':id' => $id]);
     $evento = $stmt->fetch();
 
-    // Evento não existe → volta para a agenda
+
     if (!$evento) {
         header('Location: evento.php');
         exit;
@@ -111,12 +104,9 @@ if ($id > 0) {
 <?php
     require_once __DIR__ . '/includes/footer.php';
 
-/* =====================================================
-   MODO LISTAGEM — evento.php (agenda completa)
-   ===================================================== */
+
 } else {
 
-    // Próximos eventos (data futura, mais próximos primeiro)
     $proximos = $pdo->query(
         "SELECT e.*, u.nome AS autor_nome
          FROM eventos e
