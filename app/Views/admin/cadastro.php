@@ -1,5 +1,5 @@
 <?php 
-// admin/cadastro.php 
+
 require_once __DIR__ . '/../../../config/database.php'; 
 $erros = []; 
 $sucesso = false; 
@@ -23,10 +23,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } 
     if ($senha !== $senha_confirmacao) { 
         $erros[] = "A confirmação de senha não confere com a senha informada."; 
-    } 
-    /*Persistência caso não haja erros de validação*/ 
+    }/ 
     if (empty($erros)) { 
-        try { /*Geração do hash seguro utilizando o algoritmo padrão (Bcrypt)*/ 
+        try {
             $senhaHash = password_hash($senha, PASSWORD_DEFAULT); 
             $sql = "INSERT INTO usuarios (nome, email, senha_hash, perfil, status) VALUES (:nome, :email, :senha_hash, 'Coordenador', 'ativo')"; 
             $stmt = $pdo->prepare($sql); 
