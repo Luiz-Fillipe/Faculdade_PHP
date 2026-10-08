@@ -3,7 +3,7 @@
 
 require_once __DIR__ . '/config/conexao.php';
 
-// ---------- Funções auxiliares (PHP puro) ----------
+
 function mesPorExtenso($n) {
     $meses = [1=>'janeiro',2=>'fevereiro',3=>'março',4=>'abril',5=>'maio',6=>'junho',
               7=>'julho',8=>'agosto',9=>'setembro',10=>'outubro',11=>'novembro',12=>'dezembro'];
@@ -19,7 +19,7 @@ function iniciaisDoNome($nome) {
     return mb_strtoupper($iniciais);
 }
 
-// ---------- ID da URL ----------
+
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
 if ($id <= 0) {
@@ -27,7 +27,7 @@ if ($id <= 0) {
     exit;
 }
 
-// ---------- Dados públicos do usuário (SEM e-mail e SEM senha) ----------
+
 $stmtUsuario = $pdo->prepare(
     "SELECT id, nome, perfil, criado_em
      FROM usuarios
@@ -41,12 +41,12 @@ if (!$usuario) {
     exit;
 }
 
-// Emoji de acordo com o perfil
+
 $emojisPerfil = [
-    'Admin'       => '⚙️',
-    'Editor'      => '✏️',
-    'Coordenador' => '🧭',
-    'Aluno'       => '🎓'
+    'Admin'       
+    'Editor'      
+    'Coordenador' 
+    'Aluno'       
 ];
 $emojiPerfil = $emojisPerfil[$usuario['perfil']] ?? '👤';
 
@@ -69,7 +69,7 @@ $stmtTotEventos = $pdo->prepare(
 $stmtTotEventos->execute([':id' => $id]);
 $totEventos = (int)$stmtTotEventos->fetch()['total'];
 
-// ---------- Últimas publicações do autor ----------
+
 $stmtPubs = $pdo->prepare(
     "SELECT c.titulo, c.slug, c.resumo, c.imagem_capa, c.publicado_em,
             cat.nome AS categoria_nome, cat.icone AS categoria_icone
@@ -91,7 +91,6 @@ $tituloPagina = $usuario['nome'];
 require_once __DIR__ . '/includes/header.php';
 ?>
 
-    <!-- ========== CABEÇALHO DO PERFIL ========== -->
     <section class="hero hero-categoria">
         <div class="container">
 
@@ -123,7 +122,7 @@ require_once __DIR__ . '/includes/header.php';
         </div>
     </section>
 
-    <!-- ========== PUBLICAÇÕES DO AUTOR ========== -->
+    
     <section class="secao-publicacoes">
         <div class="container">
             <h2 class="secao-titulo">Publicações de <?php echo htmlspecialchars(explode(' ', trim($usuario['nome']))[0]); ?></h2>
