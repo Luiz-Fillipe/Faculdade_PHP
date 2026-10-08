@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Identidade Visual do Projeto</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+  :root {
+    --marca-azul: #12294B;
+    --marca-amarelo: #F5C518;
+  }
+  body {
+    font-family: Arial, sans-serif;
+    color: #000000;
+    background-color: #ffffff;
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 0 20px;
+    line-height: 1.5;
+  }
+  h1, h2, h3 {
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    color: #000000;
+  }
+  ul {
+    padding-left: 20px;
+  }
+  .fonte {
+    font-size: 0.9em;
+    color: #000000;
+  }
+  .demo-box {
+    border: 1px solid #000000;
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+  .btn-marca-azul {
+    background-color: var(--marca-azul);
+    color: #ffffff;
+    border: none;
+  }
+  .btn-marca-azul:hover,
+  .btn-marca-azul:focus {
+    background-color: #0d1f3a;
+    color: #ffffff;
+  }
+  .btn-marca-amarelo {
+    background-color: var(--marca-amarelo);
+    color: #000000;
+    border: none;
+  }
+  .btn-marca-amarelo:hover,
+  .btn-marca-amarelo:focus {
+    background-color: #d9ac0e;
+    color: #000000;
+  }
+  .navbar-marca {
+    background-color: var(--marca-azul);
+  }
+  .badge-marca {
+    background-color: var(--marca-amarelo);
+    color: #000000;
+  }
+</style>
+</head>
+<body>
+
+<h1>Identidade Visual do Projeto</h1>
+
+<p>Este documento define, de forma simples, os padroes visuais que serao seguidos no desenvolvimento do front end do projeto.</p>
+
+<h2>Fonte</h2>
+<p>Fonte unica: Arial (sans serif). Motivo: fonte padrao, leve, disponivel em qualquer sistema e de leitura facil.</p>
+<p class="fonte">Por que: fontes sans serif como a Arial sao amplamente usadas em interfaces web por serem simples e por terem suporte universal em navegadores e sistemas operacionais. A legibilidade de fontes em tela e um tema estudado ha decadas, e a obra de referencia mais recente sobre o assunto reune essa literatura (RICHARDSON, 2022).</p>
+
+<h2>Estilo</h2>
+<p>O layout sera construido 100% com Bootstrap 5. Isso significa usar as classes utilitarias e os componentes prontos do framework (grid, botoes, formularios, navbar, cards), evitando CSS customizado sempre que possivel.</p>
+<p class="fonte">Por que: um estudo de comparacao entre Bootstrap e Tailwind, usando um checklist baseado nas heuristicas de usabilidade de Nielsen, mostrou que o modelo de componentes prontos do Bootstrap favorece a consistencia visual e a usabilidade de interfaces, o que e util para uma equipe pequena com prazo curto (SOUZA, 2025).</p>
+
+<h2>Cores da marca</h2>
+<ul>
+  <li>Azul marinho: cor principal (navbar, botoes primarios, links)</li>
+  <li>Amarelo: cor de destaque (avisos, botoes de acao, elementos que precisam chamar atencao)</li>
+  <li>Preto: texto principal</li>
+  <li>Branco: fundo principal</li>
+</ul>
+<p class="fonte">Por que: pesquisas sobre psicologia das cores no marketing mostram que o azul e associado a confianca, competencia e estabilidade, sendo por isso comum em marcas institucionais e de tecnologia, enquanto cores como o amarelo sao associadas a energia e a chamada de atencao, sendo usadas para destacar acoes importantes (SINGH, 2006; LABRECQUE; MILNE, 2012).</p>
+
+<h2>Demonstracao: fontes e variacoes</h2>
+<div class="demo-box">
+  <p style="font-family: Arial, sans-serif; font-weight: normal;">Arial normal: exemplo de texto corrido do projeto.</p>
+  <p style="font-family: Arial, sans-serif; font-weight: bold;">Arial bold: usado em titulos e destaques.</p>
+  <p style="font-family: Arial, sans-serif; font-style: italic;">Arial italic: usado em legendas ou observacoes pontuais.</p>
+  <p style="font-family: Arial, sans-serif; font-weight: bold; font-style: italic;">Arial bold italic: uso raro, para enfase forte.</p>
+  <h1 style="margin:0;">Titulo h1</h1>
+  <h2 style="margin:0;">Titulo h2</h2>
+  <h3 style="margin:0;">Titulo h3</h3>
+  <p style="margin:0;">Texto normal (paragrafo)</p>
+  <small>Texto pequeno (small), para notas de rodape</small>
+  <p style="margin-top:12px; margin-bottom:0;">Codigos hexadecimais da marca: Azul marinho #12294B, Amarelo #F5C518, Preto #000000, Branco #FFFFFF.</p>
+</div>
+
+<h2>Demonstracao: botoes Bootstrap</h2>
+<div class="demo-box">
+  <button type="button" class="btn btn-marca-azul me-2">Botao principal</button>
+  <button type="button" class="btn btn-marca-amarelo me-2">Botao de destaque</button>
+  <button type="button" class="btn btn-outline-dark me-2">Botao secundario</button>
+  <button type="button" class="btn btn-dark me-2" disabled>Botao desabilitado</button>
+</div>
+
+<h2>Demonstracao: componentes Bootstrap</h2>
+<div class="demo-box">
+  <nav class="navbar navbar-marca navbar-dark mb-3 rounded">
+    <div class="container-fluid">
+      <span class="navbar-brand">Nome do Portal</span>
+    </div>
+  </nav>
+
+  <div class="alert alert-dark" role="alert">
+    Exemplo de aviso do sistema (alert).
+  </div>
+
+  <span class="badge badge-marca mb-3">Novo</span>
+
+  <div class="card" style="max-width: 300px;">
+    <div class="card-body">
+      <h5 class="card-title">Titulo do card</h5>
+      <p class="card-text">Texto curto de exemplo dentro de um card do Bootstrap.</p>
+      <button class="btn btn-marca-azul btn-sm">Acao</button>
+    </div>
+  </div>
+</div>
+
+<h2>Referencias</h2>
+<ul class="fonte">
+  <li>RICHARDSON, John T. E. The Legibility of Serif and Sans Serif Typefaces: Reading from Paper and Reading from Screens. Cham: Springer, 2022. Link: <a href="https://doi.org/10.1007/978-3-030-90984-0" target="_blank">https://doi.org/10.1007/978-3-030-90984-0</a></li>
+  <li>SOUZA, Matheus Vieira de. Checklist de avaliacao heuristica de usabilidade para comparar os frameworks Bootstrap e Tailwind em interfaces graficas de e commerce. TCC (Ciencia da Computacao), Universidade Federal de Mato Grosso do Sul, Campo Grande, 2025. Link: <a href="https://repositorio.ufms.br/retrieve/af9c4834-d661-4da5-a621-8d2082da03f3/34811.pdf" target="_blank">https://repositorio.ufms.br/retrieve/af9c4834-d661-4da5-a621-8d2082da03f3/34811.pdf</a></li>
+  <li>SINGH, Satyendra. Impact of color on marketing. Management Decision, v. 44, n. 6, p. 783 a 789, 2006. Link: <a href="https://newion.uwinnipeg.ca/~ssingh5/x/color.pdf" target="_blank">https://newion.uwinnipeg.ca/~ssingh5/x/color.pdf</a></li>
+  <li>LABRECQUE, Lauren I.; MILNE, George R. Exciting red and competent blue: the importance of color in marketing. Journal of the Academy of Marketing Science, v. 40, n. 5, p. 711 a 727, 2012. Link: <a href="https://doi.org/10.1007/s11747-010-0245-y" target="_blank">https://doi.org/10.1007/s11747-010-0245-y</a></li>
+</ul>
+
+</body>
+</html>
