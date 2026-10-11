@@ -1485,3 +1485,6 @@ input {
         grid-template-columns: 66px minmax(0, 1fr);
     }
 }
+.atalho-perfil { display: inline-flex; align-items: center; justify-content: center; text-decoration: none; border-radius: 50%; }
+.avatar-cabecalho { display: inline-flex; width: 40px; height: 40px; align-items: center; justify-content: center; border-radius: 50%; background: #12294b; color: #fff; font-size: .9rem; font-weight: 800; border: 2px solid #dce4ee; }
+.atalho-perfil:hover .avatar-cabecalho, .atalho-perfil:focus-visible .avatar-cabecalho { background: #254b7b; outline: 2px solid #9eb8d7; outline-offset: 2px; }

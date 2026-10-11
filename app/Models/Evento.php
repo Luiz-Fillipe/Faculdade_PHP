@@ -115,7 +115,7 @@ if ($id > 0) {
          ORDER BY e.data_inicio ASC"
     )->fetchAll();
 
-    // Últimos encerrados (mais recentes primeiro)
+    
     $encerrados = $pdo->query(
         "SELECT e.*, u.nome AS autor_nome
          FROM eventos e

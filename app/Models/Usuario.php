@@ -1,7 +1,7 @@
 <?php
 
 
-require_once __DIR__ . '/config/conexao.php';
+require_once __DIR__ . '/../../public/config/conexao.php';
 
 
 function mesPorExtenso($n) {
@@ -43,10 +43,9 @@ if (!$usuario) {
 
 
 $emojisPerfil = [
-    'Admin'       
-    'Editor'      
-    'Coordenador' 
-    'Aluno'       
+    'Admin' => '🛡️',
+    'Professor' => '🎓',
+    'Aluno' => '📚'
 ];
 $emojiPerfil = $emojisPerfil[$usuario['perfil']] ?? '👤';
 

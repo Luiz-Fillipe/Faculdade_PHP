@@ -1,19 +1,20 @@
 
 </main>
+<?php $basePublica = str_contains(str_replace('\\', '/', $_SERVER['SCRIPT_NAME'] ?? ''), '/admin/') ? '../' : ''; ?>
 
 <footer class="rodape">
     <div class="rodape-superior">
         <div class="container rodape-superior-grid">
             <div class="rodape-item">
-                <a href="index.php" class="rodape-item-titulo">Portal SI</a>
+                <a href="<?php echo $basePublica; ?>index.php" class="rodape-item-titulo">Portal SI</a>
                 <p>Informação institucional, notícias e serviços em um só lugar.</p>
             </div>
             <div class="rodape-item">
-                <a href="index.php" class="rodape-item-titulo">Publicações</a>
+                <a href="<?php echo $basePublica; ?>index.php" class="rodape-item-titulo">Publicações</a>
                 <p>Acompanhe notícias, comunicados e conteúdos da instituição.</p>
             </div>
             <div class="rodape-item">
-                <a href="evento.php" class="rodape-item-titulo">Agenda</a>
+                <a href="<?php echo $basePublica; ?>evento.php" class="rodape-item-titulo">Agenda</a>
                 <p>Confira os próximos eventos, atividades e encontros.</p>
             </div>
             <div class="rodape-item">
@@ -37,7 +38,7 @@
                 <ul>
                 <?php foreach ($categorias as $cat): ?>
                     <li>
-                        <a href="categoria.php?slug=<?php echo urlencode($cat['slug']); ?>">
+                        <a href="<?php echo $basePublica; ?>categoria.php?slug=<?php echo urlencode($cat['slug']); ?>">
                             <?php echo htmlspecialchars($cat['nome']); ?>
                         </a>
                     </li>
@@ -46,7 +47,7 @@
             </nav>
 
             <div class="rodape-marca">
-                <a href="index.php" class="rodape-logo">
+                <a href="<?php echo $basePublica; ?>index.php" class="rodape-logo">
                     <span class="rodape-logo-sigla">SI</span>
                     <span class="rodape-logo-texto">
                         <strong>Portal</strong>

@@ -1,6 +1,20 @@
 <?php
 
 require_once __DIR__ . '/../config/conexao.php';
+require_once __DIR__ . '/../../app/helpers/auth.php';
+
+$usuarioLogado = is_logged_in();
+$nomeUsuario = (string) ($_SESSION['usuario_nome'] ?? '');
+$iniciaisUsuario = '';
+foreach (preg_split('/\s+/', trim($nomeUsuario), -1, PREG_SPLIT_NO_EMPTY) ?: [] as $parteNome) {
+    $iniciaisUsuario .= mb_substr($parteNome, 0, 1, 'UTF-8');
+    if (mb_strlen($iniciaisUsuario, 'UTF-8') >= 2) {
+        break;
+    }
+}
+$iniciaisUsuario = $iniciaisUsuario !== '' ? mb_strtoupper($iniciaisUsuario, 'UTF-8') : 'U';
+
+$basePublica = str_contains(str_replace('\\', '/', $_SERVER['SCRIPT_NAME'] ?? ''), '/admin/') ? '../' : '';
 
 $categorias = $pdo->query(
     "SELECT id, nome, slug
@@ -23,8 +37,8 @@ $slugsCategorias = array_column($categorias, 'slug');
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Portal SI — Sistema de Informações Institucional">
     <title><?php echo htmlspecialchars($tituloPagina); ?> | Portal SI</title>
-    <link rel="stylesheet" href="css/style.css?v=<?php echo filemtime(__DIR__ . '/../css/style.css'); ?>">
-    <link rel="stylesheet" href="css/layout.css?v=<?php echo filemtime(__DIR__ . '/../css/layout.css'); ?>">
+    <link rel="stylesheet" href="<?php echo $basePublica; ?>css/style.css?v=<?php echo filemtime(__DIR__ . '/../css/style.css'); ?>">
+    <link rel="stylesheet" href="<?php echo $basePublica; ?>css/layout.css?v=<?php echo filemtime(__DIR__ . '/../css/layout.css'); ?>">
 </head>
 <body>
 
@@ -39,7 +53,7 @@ $slugsCategorias = array_column($categorias, 'slug');
                 <span></span>
             </label>
 
-            <a href="index.php" class="cabecalho-logo">
+            <a href="<?php echo $basePublica; ?>index.php" class="cabecalho-logo">
                 <span class="cabecalho-logo-nome">
                     <small>Portal</small>
                     <strong>SI</strong>
@@ -49,12 +63,19 @@ $slugsCategorias = array_column($categorias, 'slug');
 
             <div class="cabecalho-acoes">
                 <div class="cabecalho-links">
-                    <a href="index.php">Institucional</a>
-                    <a href="evento.php">Agenda</a>
+                    <a href="<?php echo $basePublica; ?>index.php">Institucional</a>
+                    <a href="<?php echo $basePublica; ?>evento.php">Agenda</a>
                     <a href="mailto:contato@portalsi.edu.br">Contato</a>
+                    <?php if ($usuarioLogado): ?>
+                        <a class="atalho-perfil" href="<?php echo $basePublica === '../' ? 'perfil.php' : 'admin/perfil.php'; ?>" aria-label="Abrir perfil de <?php echo htmlspecialchars($nomeUsuario, ENT_QUOTES, 'UTF-8'); ?>" title="Meu perfil">
+                            <span class="avatar-cabecalho"><?php echo htmlspecialchars($iniciaisUsuario, ENT_QUOTES, 'UTF-8'); ?></span>
+                        </a>
+                    <?php else: ?>
+                        <a href="<?php echo $basePublica; ?>login.php">Entrar</a>
+                    <?php endif; ?>
                 </div>
 
-                <form action="index.php" method="get" class="cabecalho-busca" role="search">
+                <form action="<?php echo $basePublica; ?>index.php" method="get" class="cabecalho-busca" role="search">
                     <label for="busca" class="texto-acessivel">Buscar no portal</label>
                     <input type="search" id="busca" name="busca" value="<?php echo htmlspecialchars($buscaAtual); ?>" placeholder="Buscar no portal">
                     <button type="submit" aria-label="Buscar">
@@ -72,18 +93,18 @@ $slugsCategorias = array_column($categorias, 'slug');
         <div class="container editorias-conteudo">
             <ul class="editorias-lista">
                 <li>
-                    <a href="index.php" class="<?php echo ($paginaAtual === 'index.php' && $slugAtual === '') ? 'ativo' : ''; ?>">Início</a>
+                    <a href="<?php echo $basePublica; ?>index.php" class="<?php echo ($paginaAtual === 'index.php' && $slugAtual === '') ? 'ativo' : ''; ?>">Início</a>
                 </li>
                 <?php foreach ($categorias as $cat): ?>
                     <li>
-                        <a href="categoria.php?slug=<?php echo urlencode($cat['slug']); ?>" class="<?php echo ($cat['slug'] === $slugAtual) ? 'ativo' : ''; ?>">
+                        <a href="<?php echo $basePublica; ?>categoria.php?slug=<?php echo urlencode($cat['slug']); ?>" class="<?php echo ($cat['slug'] === $slugAtual) ? 'ativo' : ''; ?>">
                             <?php echo htmlspecialchars($cat['nome']); ?>
                         </a>
                     </li>
                 <?php endforeach; ?>
                 <?php if (!in_array('eventos', $slugsCategorias, true)): ?>
                     <li>
-                        <a href="evento.php" class="<?php echo ($paginaAtual === 'evento.php') ? 'ativo' : ''; ?>">Eventos</a>
+                        <a href="<?php echo $basePublica; ?>evento.php" class="<?php echo ($paginaAtual === 'evento.php') ? 'ativo' : ''; ?>">Eventos</a>
                     </li>
                 <?php endif; ?>
             </ul>

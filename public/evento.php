@@ -133,6 +133,12 @@ if ($id > 0) {
             </div>
         </header>
 
+        <?php if (!empty($evento['imagem'])): ?>
+            <div class="container" style="padding-top:24px;padding-bottom:8px">
+                <img src="<?php echo htmlspecialchars($evento['imagem'], ENT_QUOTES, 'UTF-8'); ?>" alt="<?php echo htmlspecialchars($evento['titulo'], ENT_QUOTES, 'UTF-8'); ?>" style="display:block;width:100%;max-height:520px;object-fit:cover;border-radius:12px">
+            </div>
+        <?php endif; ?>
+
         <div class="container evento-detalhe-grid">
 
             <section class="evento-detalhe-conteudo">
