@@ -98,7 +98,7 @@ require_once __DIR__ . '/includes/header.php';
     <div class="container">
         <?php if ($destaque): ?>
             <div class="home-destaques-grid">
-                <article class="home-principal">
+                <article class="home-principal card">
                     <a href="conteudo.php?slug=<?php echo urlencode($destaque['slug']); ?>" class="home-principal-imagem<?php echo empty($destaque['imagem_capa']) ? ' home-imagem-vazia' : ''; ?>">
                         <?php if (!empty($destaque['imagem_capa'])): ?>
                             <img src="<?php echo htmlspecialchars($destaque['imagem_capa']); ?>" alt="<?php echo htmlspecialchars($destaque['titulo']); ?>">
@@ -133,7 +133,7 @@ require_once __DIR__ . '/includes/header.php';
                 <?php if (!empty($chamadas)): ?>
                     <div class="home-chamadas">
                         <?php foreach ($chamadas as $publicacao): ?>
-                            <article class="home-chamada">
+                            <article class="home-chamada card">
                                 <a href="conteudo.php?slug=<?php echo urlencode($publicacao['slug']); ?>" class="home-chamada-imagem<?php echo empty($publicacao['imagem_capa']) ? ' home-imagem-vazia' : ''; ?>">
                                     <?php if (!empty($publicacao['imagem_capa'])): ?>
                                         <img src="<?php echo htmlspecialchars($publicacao['imagem_capa']); ?>" alt="<?php echo htmlspecialchars($publicacao['titulo']); ?>" loading="lazy">
@@ -178,7 +178,7 @@ require_once __DIR__ . '/includes/header.php';
 
             <div class="home-noticias-grid">
                 <?php foreach ($recentes as $publicacao): ?>
-                    <article class="home-noticia">
+                    <article class="home-noticia card border-0">
                         <a href="conteudo.php?slug=<?php echo urlencode($publicacao['slug']); ?>" class="home-noticia-imagem<?php echo empty($publicacao['imagem_capa']) ? ' home-imagem-vazia' : ''; ?>">
                             <?php if (!empty($publicacao['imagem_capa'])): ?>
                                 <img src="<?php echo htmlspecialchars($publicacao['imagem_capa']); ?>" alt="<?php echo htmlspecialchars($publicacao['titulo']); ?>" loading="lazy">
@@ -222,7 +222,7 @@ require_once __DIR__ . '/includes/header.php';
 
             <div class="home-eventos-grid">
                 <?php foreach ($eventos as $evento): ?>
-                    <article class="home-evento">
+                    <article class="home-evento card">
                         <time class="home-evento-data" datetime="<?php echo date('Y-m-d', strtotime($evento['data_inicio'])); ?>">
                             <strong><?php echo date('d', strtotime($evento['data_inicio'])); ?></strong>
                             <span><?php echo mesPorExtenso(date('n', strtotime($evento['data_inicio']))); ?></span>

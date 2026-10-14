@@ -48,9 +48,10 @@ require_once __DIR__ . '/includes/header.php';
 
     <section class="secao-publicacoes">
         <div class="container">
-            <div class="grade">
+            <div class="row g-4">
                 <?php foreach ($conteudos as $c): ?>
-                    <article class="card">
+                    <div class="col-12 col-md-6 col-lg-4">
+                    <article class="card portal-card h-100">
 
                         <?php if (!empty($c['imagem_capa'])): ?>
                             <img class="card-imagem"
@@ -58,25 +59,30 @@ require_once __DIR__ . '/includes/header.php';
                                  alt="<?php echo htmlspecialchars($c['titulo']); ?>">
                         <?php endif; ?>
 
-                        <h3 class="card-titulo"><?php echo htmlspecialchars($c['titulo']); ?></h3>
-                        <p class="card-resumo"><?php echo htmlspecialchars($c['resumo']); ?></p>
+                        <div class="card-body d-flex flex-column">
+                            <h3 class="card-titulo"><?php echo htmlspecialchars($c['titulo']); ?></h3>
+                            <p class="card-resumo"><?php echo htmlspecialchars($c['resumo']); ?></p>
 
-                        <div class="card-rodape">
-                            <span class="card-meta">
-                                📅 <?php echo date('d/m/Y', strtotime($c['publicado_em'])); ?>
-                                · ✍️ <?php echo htmlspecialchars($c['autor_nome']); ?>
-                            </span>
-                            <a class="card-link"
-                               href="conteudo.php?slug=<?php echo urlencode($c['slug']); ?>">
-                               Ler mais →
-                            </a>
+                            <div class="card-rodape mt-auto">
+                                <span class="card-meta d-block">
+                                    📅 <?php echo date('d/m/Y', strtotime($c['publicado_em'])); ?>
+                                    · ✍️ <?php echo htmlspecialchars($c['autor_nome']); ?>
+                                </span>
+                                <a class="card-link"
+                                   href="conteudo.php?slug=<?php echo urlencode($c['slug']); ?>">
+                                   Ler mais →
+                                </a>
+                            </div>
                         </div>
 
                     </article>
+                    </div>
                 <?php endforeach; ?>
 
                 <?php if (empty($conteudos)): ?>
-                    <p class="grade-vazia">Nenhuma publicação nesta categoria ainda.</p>
+                    <div class="col-12">
+                        <p class="grade-vazia mb-0">Nenhuma publicação nesta categoria ainda.</p>
+                    </div>
                 <?php endif; ?>
             </div>
         </div>

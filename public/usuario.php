@@ -149,7 +149,7 @@ require_once __DIR__ . '/includes/header.php';
             <div class="autor-lista">
 
                 <?php foreach ($publicacoes as $publicacao): ?>
-                    <article class="autor-publicacao">
+                    <article class="autor-publicacao card border-0">
 
                         <a
                             href="conteudo.php?slug=<?php echo urlencode($publicacao['slug']); ?>"

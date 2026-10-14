@@ -37,23 +37,24 @@ $slugsCategorias = array_column($categorias, 'slug');
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Portal SI — Sistema de Informações Institucional">
     <title><?php echo htmlspecialchars($tituloPagina); ?> | Portal SI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="<?php echo $basePublica; ?>css/style.css?v=<?php echo filemtime(__DIR__ . '/../css/style.css'); ?>">
     <link rel="stylesheet" href="<?php echo $basePublica; ?>css/layout.css?v=<?php echo filemtime(__DIR__ . '/../css/layout.css'); ?>">
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
 
 <input type="checkbox" id="navegacao-controle" class="navegacao-controle" aria-hidden="true">
 
-<header class="cabecalho">
+<header class="cabecalho navbar navbar-dark d-block p-0">
     <div class="cabecalho-principal">
         <div class="container cabecalho-linha">
-            <label for="navegacao-controle" class="cabecalho-menu-botao" aria-label="Abrir menu">
+            <label for="navegacao-controle" class="cabecalho-menu-botao btn border-0" aria-label="Abrir menu">
                 <span></span>
                 <span></span>
                 <span></span>
             </label>
 
-            <a href="<?php echo $basePublica; ?>index.php" class="cabecalho-logo">
+            <a href="<?php echo $basePublica; ?>index.php" class="cabecalho-logo navbar-brand m-0">
                 <span class="cabecalho-logo-nome">
                     <small>Portal</small>
                     <strong>SI</strong>
@@ -77,8 +78,8 @@ $slugsCategorias = array_column($categorias, 'slug');
 
                 <form action="<?php echo $basePublica; ?>index.php" method="get" class="cabecalho-busca" role="search">
                     <label for="busca" class="texto-acessivel">Buscar no portal</label>
-                    <input type="search" id="busca" name="busca" value="<?php echo htmlspecialchars($buscaAtual); ?>" placeholder="Buscar no portal">
-                    <button type="submit" aria-label="Buscar">
+                    <input class="form-control" type="search" id="busca" name="busca" value="<?php echo htmlspecialchars($buscaAtual); ?>" placeholder="Buscar no portal">
+                    <button class="btn" type="submit" aria-label="Buscar">
                         <svg viewBox="0 0 24 24" aria-hidden="true">
                             <circle cx="11" cy="11" r="6.5"></circle>
                             <path d="M16 16L21 21"></path>
@@ -89,22 +90,22 @@ $slugsCategorias = array_column($categorias, 'slug');
         </div>
     </div>
 
-    <nav class="editorias" aria-label="Navegação principal">
+    <nav class="editorias navbar navbar-expand-md p-0" aria-label="Navegação principal">
         <div class="container editorias-conteudo">
-            <ul class="editorias-lista">
+            <ul class="editorias-lista navbar-nav">
                 <li>
-                    <a href="<?php echo $basePublica; ?>index.php" class="<?php echo ($paginaAtual === 'index.php' && $slugAtual === '') ? 'ativo' : ''; ?>">Início</a>
+                    <a href="<?php echo $basePublica; ?>index.php" class="nav-link <?php echo ($paginaAtual === 'index.php' && $slugAtual === '') ? 'ativo' : ''; ?>">Início</a>
                 </li>
                 <?php foreach ($categorias as $cat): ?>
                     <li>
-                        <a href="<?php echo $basePublica; ?>categoria.php?slug=<?php echo urlencode($cat['slug']); ?>" class="<?php echo ($cat['slug'] === $slugAtual) ? 'ativo' : ''; ?>">
+                        <a href="<?php echo $basePublica; ?>categoria.php?slug=<?php echo urlencode($cat['slug']); ?>" class="nav-link <?php echo ($cat['slug'] === $slugAtual) ? 'ativo' : ''; ?>">
                             <?php echo htmlspecialchars($cat['nome']); ?>
                         </a>
                     </li>
                 <?php endforeach; ?>
                 <?php if (!in_array('eventos', $slugsCategorias, true)): ?>
                     <li>
-                        <a href="<?php echo $basePublica; ?>evento.php" class="<?php echo ($paginaAtual === 'evento.php') ? 'ativo' : ''; ?>">Eventos</a>
+                        <a href="<?php echo $basePublica; ?>evento.php" class="nav-link <?php echo ($paginaAtual === 'evento.php') ? 'ativo' : ''; ?>">Eventos</a>
                     </li>
                 <?php endif; ?>
             </ul>

@@ -90,7 +90,7 @@ if ($id > 0) {
                 <?php endif; ?>
             </section>
 
-            <aside class="evento-detalhe-informacoes">
+            <aside class="evento-detalhe-informacoes card">
                 <h2>Informações</h2>
 
                 <dl>
@@ -206,7 +206,7 @@ if ($id > 0) {
                         <?php foreach ($proximos as $evento): ?>
                             <?php $dataEvento = strtotime($evento['data_inicio']); ?>
 
-                            <article class="agenda-item">
+                            <article class="agenda-item card">
 
                                 <time
                                     class="agenda-item-data"
@@ -286,7 +286,7 @@ if ($id > 0) {
                         <?php foreach ($encerrados as $evento): ?>
                             <?php $dataEvento = strtotime($evento['data_inicio']); ?>
 
-                            <article class="agenda-item agenda-item-encerrado">
+                            <article class="agenda-item agenda-item-encerrado card">
 
                                 <time
                                     class="agenda-item-data"

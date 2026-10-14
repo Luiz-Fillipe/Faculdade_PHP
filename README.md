@@ -6,7 +6,7 @@ Portal institucional em PHP e PostgreSQL. Os arquivos existentes foram mantidos 
 
 - PHP 8.1 ou superior com extensões `pdo_pgsql`, `fileinfo` e `mbstring` habilitadas.
 - PostgreSQL 14 ou superior.
-- Apache/XAMPP configurado para servir a pasta `public/` como raiz web, ou acesso local por `http://localhost/portal_si/public/`.
+- Apache/XAMPP configurado para servir a pasta `public/` como raiz web. Na organização atual do XAMPP, use `http://localhost/PE4/portal-si/public/`.
 
 ## Instalação de teste
 
@@ -16,7 +16,44 @@ Portal institucional em PHP e PostgreSQL. Os arquivos existentes foram mantidos 
 4. Execute `database/seed.sql` para inserir as categorias de exemplo.
 5. Configure a conexão em `config/database.php` por variáveis de ambiente `PORTAL_DB_HOST`, `PORTAL_DB_NAME`, `PORTAL_DB_USER`, `PORTAL_DB_PASSWORD` e `PORTAL_DB_PORT`, ou ajuste os valores locais.
 6. Execute uma única vez `database/criar_admin.php` pelo terminal: `php database/criar_admin.php`. O usuário de teste é `admin@portalsi.local`, senha inicial `TroqueEstaSenha!2026`. Troque a senha ao entrar e remova `database/criar_admin.php` da pasta pública do projeto/servidor após criar a conta. Não use essa senha em produção.
-7. Abra `http://localhost/portal_si/public/` para a página inicial e `http://localhost/portal_si/public/login.php` para entrar.
+7. Salve o projeto no XAMPP com o nome de pasta `portal-si`.
+8. Abra `http://localhost/PE4/portal-si/public/` para a página inicial e `http://localhost/PE4/portal-si/public/login.php` para entrar. Se a pasta `portal-si` estiver diretamente em `htdocs`, retire `/PE4` dessas URLs.
+
+## Interface e Bootstrap
+
+- O portal utiliza Bootstrap 5.3.3 pelo CDN oficial.
+- Somente o CSS do Bootstrap é carregado; o projeto não utiliza JavaScript.
+- A grade responsiva, formulários, botões, navegação e cards devem priorizar classes Bootstrap.
+- O CSS próprio aplica a identidade visual: azul `#12294B`, amarelo `#F5C518`, preto e branco.
+- A fonte padrão do portal e do painel administrativo é Arial.
+- `public/css/style.css` reúne tokens, base e componentes; `public/css/layout.css` contém apenas os layouts específicos das páginas.
+- `public/assets/css/admin.css` contém apenas os ajustes visuais do painel administrativo.
+
+## Estrutura principal
+
+```text
+portal-si/
+├── app/                 Regras, models, controllers e views auxiliares
+├── config/              Configuração central do banco
+├── database/            Estrutura, dados iniciais e criação do administrador
+├── docs/                Identidade visual do projeto
+└── public/              Arquivos acessíveis pelo navegador
+    ├── admin/           Área administrativa
+    ├── assets/css/      Estilos do painel
+    ├── css/             Estilos do portal público
+    ├── includes/        Cabeçalho e rodapé
+    └── uploads/         Imagens enviadas pelo painel
+```
+
+## Verificação antes da entrega
+
+1. Execute `php -l` em todos os arquivos PHP.
+2. Crie um banco vazio e execute `schema.sql` e `seed.sql` nessa ordem.
+3. Teste início, busca, categorias, publicação, agenda e perfil público.
+4. Teste login, perfil, usuários, notícias, eventos e logout.
+5. Verifique o portal em larguras de 360 px, 768 px e 1280 px.
+6. Confirme que não existem arquivos `.js` ou tags `<script>`.
+7. Confirme que `git status` está limpo antes da entrega.
 
 ## Perfis
 

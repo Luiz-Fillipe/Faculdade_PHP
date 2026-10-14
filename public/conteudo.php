@@ -165,7 +165,7 @@ require_once __DIR__ . '/includes/header.php';
 
         </div>
 
-        <aside class="publicacao-informacoes">
+        <aside class="publicacao-informacoes card">
             <div>
                 <span>Categoria</span>
                 <a href="categoria.php?slug=<?php echo urlencode($conteudo['categoria_slug']); ?>">
