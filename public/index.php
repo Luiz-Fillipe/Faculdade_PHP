@@ -215,7 +215,7 @@ require_once __DIR__ . '/includes/header.php';
 <?php if (!empty($eventos) && $busca === ''): ?>
     <section class="home-agenda">
         <div class="container">
-            <div class="home-secao-titulo home-secao-titulo-claro">
+            <div class="home-secao-titulo">
                 <h2>Agenda institucional</h2>
                 <span></span>
             </div>

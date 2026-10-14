@@ -8,14 +8,14 @@ VALUES
 ON CONFLICT (slug) DO NOTHING;
 
 INSERT INTO conteudos (titulo, slug, resumo, corpo, categoria_id, autor_id, status, destaque, publicado_em, imagem_capa, link_youtube)
-SELECT 'Matrícula aberta para o próximo semestre', 'matricula-aberta', 'Confira os prazos e documentos necessários.', 'Texto completo da notícia de matrícula.', cat.id, u.id, 'publicado', TRUE, now(), NULL, 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
+SELECT 'Matrícula aberta para o próximo semestre', 'matricula-aberta', 'Confira os prazos e documentos necessários.', 'Texto completo da notícia de matrícula.', cat.id, u.id, 'publicado', TRUE, now(), 'assets/img/noticias/matriculas-cursos-qualificacao.webp', 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
 FROM categorias cat, usuarios u
 WHERE cat.slug = 'noticias'
   AND u.email = 'admin@portalsi.local'
   AND NOT EXISTS (SELECT 1 FROM conteudos WHERE slug = 'matricula-aberta');
 
-INSERT INTO conteudos (titulo, slug, resumo, corpo, categoria_id, autor_id, status, destaque, publicado_em)
-SELECT 'Resultado da pesquisa de satisfação', 'resultado-pesquisa', 'Veja os principais resultados.', 'Texto completo da pesquisa de satisfação.', cat.id, u.id, 'publicado', FALSE, now() - interval '1 day'
+INSERT INTO conteudos (titulo, slug, resumo, corpo, categoria_id, autor_id, status, destaque, publicado_em, imagem_capa)
+SELECT 'Resultado da pesquisa de satisfação', 'resultado-pesquisa', 'Veja os principais resultados.', 'Texto completo da pesquisa de satisfação.', cat.id, u.id, 'publicado', FALSE, now() - interval '1 day', 'assets/img/noticias/pesquisa-dados-setor-publico.webp'
 FROM categorias cat, usuarios u
 WHERE cat.slug = 'pesquisa'
   AND u.email = 'admin@portalsi.local'
@@ -32,3 +32,25 @@ SELECT 'Semana acadêmica', 'Evento institucional já encerrado, usado como exem
 FROM usuarios u
 WHERE u.email = 'admin@portalsi.local'
   AND NOT EXISTS (SELECT 1 FROM eventos WHERE titulo = 'Semana acadêmica');
+
+UPDATE conteudos
+SET imagem_capa = CASE slug
+    WHEN 'portal-si-plataforma-digital' THEN 'assets/img/noticias/portal-si-plataforma-digital.webp'
+    WHEN 'semana-tecnologia-inscricoes' THEN 'assets/img/noticias/semana-tecnologia-inscricoes.webp'
+    WHEN 'comunicado-horario-atendimento' THEN 'assets/img/noticias/comunicado-horario-atendimento.webp'
+    WHEN 'matriculas-cursos-qualificacao' THEN 'assets/img/noticias/matriculas-cursos-qualificacao.webp'
+    WHEN 'pesquisa-dados-setor-publico' THEN 'assets/img/noticias/pesquisa-dados-setor-publico.webp'
+    WHEN 'extensao-tecnologia-comunidade' THEN 'assets/img/noticias/extensao-tecnologia-comunidade.webp'
+    WHEN 'estudantes-premio-inovacao' THEN 'assets/img/noticias/estudantes-premio-inovacao.webp'
+    WHEN 'manutencao-programada-sistema' THEN 'assets/img/noticias/manutencao-programada-sistema.webp'
+END
+WHERE slug IN (
+    'portal-si-plataforma-digital',
+    'semana-tecnologia-inscricoes',
+    'comunicado-horario-atendimento',
+    'matriculas-cursos-qualificacao',
+    'pesquisa-dados-setor-publico',
+    'extensao-tecnologia-comunidade',
+    'estudantes-premio-inovacao',
+    'manutencao-programada-sistema'
+);

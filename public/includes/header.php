@@ -63,6 +63,17 @@ $slugsCategorias = array_column($categorias, 'slug');
             </a>
 
             <div class="cabecalho-acoes">
+                <form action="<?php echo $basePublica; ?>index.php" method="get" class="cabecalho-busca" role="search">
+                    <label for="busca" class="texto-acessivel">Buscar no portal</label>
+                    <input class="form-control" type="search" id="busca" name="busca" value="<?php echo htmlspecialchars($buscaAtual); ?>" placeholder="Buscar no portal">
+                    <button class="btn" type="submit" aria-label="Buscar">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <circle cx="11" cy="11" r="6.5"></circle>
+                            <path d="M16 16L21 21"></path>
+                        </svg>
+                    </button>
+                </form>
+
                 <div class="cabecalho-links">
                     <a href="<?php echo $basePublica; ?>index.php">Institucional</a>
                     <a href="<?php echo $basePublica; ?>evento.php">Agenda</a>
@@ -75,17 +86,6 @@ $slugsCategorias = array_column($categorias, 'slug');
                         <a href="<?php echo $basePublica; ?>login.php">Entrar</a>
                     <?php endif; ?>
                 </div>
-
-                <form action="<?php echo $basePublica; ?>index.php" method="get" class="cabecalho-busca" role="search">
-                    <label for="busca" class="texto-acessivel">Buscar no portal</label>
-                    <input class="form-control" type="search" id="busca" name="busca" value="<?php echo htmlspecialchars($buscaAtual); ?>" placeholder="Buscar no portal">
-                    <button class="btn" type="submit" aria-label="Buscar">
-                        <svg viewBox="0 0 24 24" aria-hidden="true">
-                            <circle cx="11" cy="11" r="6.5"></circle>
-                            <path d="M16 16L21 21"></path>
-                        </svg>
-                    </button>
-                </form>
             </div>
         </div>
     </div>

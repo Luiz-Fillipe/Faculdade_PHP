@@ -9,13 +9,14 @@
     --cor-secundaria-escura: #d9ac0e;
     --cor-texto: #000000;
     --cor-texto-suave: #5f6368;
+    --cor-texto-secundario: #5f6368;
     --cor-fundo: #ffffff;
     --cor-superficie: #f5f6f8;
     --cor-borda: #d7dce3;
     --cor-branca: #ffffff;
-    --sombra: 0 4px 14px rgba(18, 41, 75, 0.12);
-    --sombra-hover: 0 8px 24px rgba(18, 41, 75, 0.18);
-    --raio: 6px;
+    --sombra: 0 2px 8px rgba(18, 41, 75, 0.08);
+    --sombra-hover: 0 4px 12px rgba(18, 41, 75, 0.12);
+    --raio: 4px;
     --transicao: 0.2s ease;
 }
 
@@ -153,40 +154,37 @@ select {
 }
 
 .hero {
-    padding: 64px 0;
-    background:
-        linear-gradient(90deg, rgba(18, 41, 75, 0.98), rgba(18, 41, 75, 0.88)),
-        var(--cor-primaria);
+    padding: 46px 0 48px;
+    background: var(--cor-primaria);
     color: var(--cor-branca);
-    border-bottom: 6px solid var(--cor-secundaria);
+    border-bottom: 4px solid var(--cor-secundaria);
 }
 
 .hero-tag {
     display: inline-flex;
     align-items: center;
-    margin-bottom: 18px;
-    padding: 7px 12px;
-    background: var(--cor-secundaria);
-    color: var(--cor-texto);
-    border-radius: 3px;
+    margin-bottom: 12px;
+    padding-left: 10px;
+    color: var(--cor-secundaria);
+    border-left: 3px solid var(--cor-secundaria);
     font-size: 12px;
     font-weight: 800;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
 }
 
 .hero-titulo {
     max-width: 850px;
-    margin-bottom: 18px;
+    margin-bottom: 12px;
     color: var(--cor-branca);
-    font-size: clamp(32px, 5vw, 54px);
-    line-height: 1.08;
-    letter-spacing: -1.3px;
+    font-size: clamp(32px, 4vw, 46px);
+    line-height: 1.12;
+    letter-spacing: -0.8px;
 }
 
 .hero-resumo {
     max-width: 760px;
-    margin-bottom: 22px;
+    margin-bottom: 0;
     color: rgba(255, 255, 255, 0.86);
     font-size: 18px;
     line-height: 1.7;
@@ -240,7 +238,7 @@ select {
 
 .secao-publicacoes,
 .secao-eventos {
-    padding: 56px 0;
+    padding: 46px 0 58px;
 }
 
 .secao-eventos {
@@ -287,7 +285,7 @@ select {
     overflow: hidden;
     background: var(--cor-branca);
     border: 1px solid var(--cor-borda);
-    border-top: 4px solid var(--cor-secundaria);
+    border-top: 3px solid var(--cor-secundaria);
     border-radius: var(--raio);
     box-shadow: var(--sombra);
     transition: transform var(--transicao), box-shadow var(--transicao), border-color var(--transicao);
@@ -296,7 +294,7 @@ select {
 .portal-card:hover {
     border-color: #b9c1cc;
     box-shadow: var(--sombra-hover);
-    transform: translateY(-4px);
+    transform: translateY(-1px);
 }
 
 .login-publico {

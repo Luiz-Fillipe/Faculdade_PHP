@@ -38,7 +38,7 @@ require_once __DIR__ . '/includes/header.php';
 
     <section class="hero hero-categoria">
         <div class="container">
-            <span class="hero-tag"><?php echo htmlspecialchars($categoria['icone']); ?> Categoria</span>
+            <span class="hero-tag">Categoria</span>
             <h1 class="hero-titulo"><?php echo htmlspecialchars($categoria['nome']); ?></h1>
             <p class="hero-resumo">
                 <?php echo htmlspecialchars($categoria['descricao'] ?? ''); ?>
@@ -65,8 +65,8 @@ require_once __DIR__ . '/includes/header.php';
 
                             <div class="card-rodape mt-auto">
                                 <span class="card-meta d-block">
-                                    📅 <?php echo date('d/m/Y', strtotime($c['publicado_em'])); ?>
-                                    · ✍️ <?php echo htmlspecialchars($c['autor_nome']); ?>
+                                    <?php echo date('d/m/Y', strtotime($c['publicado_em'])); ?>
+                                    · <?php echo htmlspecialchars($c['autor_nome']); ?>
                                 </span>
                                 <a class="card-link"
                                    href="conteudo.php?slug=<?php echo urlencode($c['slug']); ?>">
