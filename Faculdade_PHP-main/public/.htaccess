@@ -1,0 +1,7 @@
+Options -Indexes
+DirectoryIndex index.php
+AddDefaultCharset UTF-8
+
+<FilesMatch "^(\.env|composer\.(json|lock)|.*\.sql|.*\.log)$">
+    Require all denied
+</FilesMatch>
