@@ -14,7 +14,7 @@ $stmtCategoria->execute([':slug' => $slug]);
 $categoria = $stmtCategoria->fetch();
 
 if (!$categoria) {
-    header('Location: index.php');
+    header('Location: index.php?erro=categoria');
     exit;
 }
 

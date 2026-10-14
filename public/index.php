@@ -1,28 +1,10 @@
 <?php
 
 require_once __DIR__ . '/config/conexao.php';
-
-function mesAbreviado($numero)
-{
-    $meses = [
-        1 => 'Jan',
-        2 => 'Fev',
-        3 => 'Mar',
-        4 => 'Abr',
-        5 => 'Mai',
-        6 => 'Jun',
-        7 => 'Jul',
-        8 => 'Ago',
-        9 => 'Set',
-        10 => 'Out',
-        11 => 'Nov',
-        12 => 'Dez'
-    ];
-
-    return $meses[(int) $numero] ?? '';
-}
+require_once __DIR__ . '/funcoes.php';
 
 $busca = trim($_GET['busca'] ?? '');
+$mensagemErro = mensagemDeErro($_GET['erro'] ?? '');
 $destaque = false;
 
 if ($busca === '') {
@@ -105,6 +87,12 @@ $tituloPagina = $busca !== '' ? 'Busca' : 'Início';
 require_once __DIR__ . '/includes/header.php';
 
 ?>
+
+<?php if ($mensagemErro !== ''): ?>
+    <div class="container">
+        <p class="alerta-erro"><?php echo htmlspecialchars($mensagemErro); ?></p>
+    </div>
+<?php endif; ?>
 
 <section class="home-destaques">
     <div class="container">
@@ -237,7 +225,7 @@ require_once __DIR__ . '/includes/header.php';
                     <article class="home-evento">
                         <time class="home-evento-data" datetime="<?php echo date('Y-m-d', strtotime($evento['data_inicio'])); ?>">
                             <strong><?php echo date('d', strtotime($evento['data_inicio'])); ?></strong>
-                            <span><?php echo mesAbreviado(date('n', strtotime($evento['data_inicio']))); ?></span>
+                            <span><?php echo mesPorExtenso(date('n', strtotime($evento['data_inicio']))); ?></span>
                             <small><?php echo date('H:i', strtotime($evento['data_inicio'])); ?></small>
                         </time>
 
@@ -246,8 +234,9 @@ require_once __DIR__ . '/includes/header.php';
                             <p><?php echo htmlspecialchars($evento['local'] ?: 'Local a definir'); ?></p>
                         </div>
 
-                        <?php if (!empty($evento['link_inscricao'])): ?>
-                            <a href="<?php echo htmlspecialchars($evento['link_inscricao']); ?>" class="home-evento-link" target="_blank" rel="noopener noreferrer">Inscreva-se</a>
+                        <?php $linkInscricao = linkValido($evento['link_inscricao'] ?? null); ?>
+                        <?php if ($linkInscricao): ?>
+                            <a href="<?php echo htmlspecialchars($linkInscricao); ?>" class="home-evento-link" target="_blank" rel="noopener noreferrer">Inscreva-se</a>
                         <?php else: ?>
                             <a href="evento.php?id=<?php echo (int) $evento['id']; ?>" class="home-evento-link">Ver evento</a>
                         <?php endif; ?>

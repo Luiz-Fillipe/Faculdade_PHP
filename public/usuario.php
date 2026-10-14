@@ -1,26 +1,7 @@
 <?php
 
 require_once __DIR__ . '/config/conexao.php';
-
-function mesPorExtenso($numero)
-{
-    $meses = [
-        1 => 'janeiro',
-        2 => 'fevereiro',
-        3 => 'março',
-        4 => 'abril',
-        5 => 'maio',
-        6 => 'junho',
-        7 => 'julho',
-        8 => 'agosto',
-        9 => 'setembro',
-        10 => 'outubro',
-        11 => 'novembro',
-        12 => 'dezembro'
-    ];
-
-    return $meses[(int) $numero] ?? '';
-}
+require_once __DIR__ . '/funcoes.php';
 
 function iniciaisDoNome($nome)
 {
@@ -37,7 +18,7 @@ function iniciaisDoNome($nome)
 $id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
 
 if ($id <= 0) {
-    header('Location: index.php');
+    header('Location: index.php?erro=usuario');
     exit;
 }
 
@@ -52,7 +33,7 @@ $stmtUsuario->execute([':id' => $id]);
 $usuario = $stmtUsuario->fetch();
 
 if (!$usuario) {
-    header('Location: index.php');
+    header('Location: index.php?erro=usuario');
     exit;
 }
 

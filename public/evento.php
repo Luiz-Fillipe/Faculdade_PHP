@@ -1,72 +1,7 @@
 <?php
 
 require_once __DIR__ . '/config/conexao.php';
-
-function mesAbreviado($numero)
-{
-    $meses = [
-        1 => 'Jan',
-        2 => 'Fev',
-        3 => 'Mar',
-        4 => 'Abr',
-        5 => 'Mai',
-        6 => 'Jun',
-        7 => 'Jul',
-        8 => 'Ago',
-        9 => 'Set',
-        10 => 'Out',
-        11 => 'Nov',
-        12 => 'Dez'
-    ];
-
-    return $meses[(int) $numero] ?? '';
-}
-
-function dataCompleta($timestamp)
-{
-    $meses = [
-        1 => 'janeiro',
-        2 => 'fevereiro',
-        3 => 'março',
-        4 => 'abril',
-        5 => 'maio',
-        6 => 'junho',
-        7 => 'julho',
-        8 => 'agosto',
-        9 => 'setembro',
-        10 => 'outubro',
-        11 => 'novembro',
-        12 => 'dezembro'
-    ];
-
-    $data = strtotime($timestamp);
-
-    return date('j', $data)
-        . ' de '
-        . $meses[(int) date('n', $data)]
-        . ' de '
-        . date('Y', $data)
-        . ' às '
-        . date('H:i', $data);
-}
-
-function resumoCurto($texto, $limite = 170)
-{
-    $texto = trim($texto ?? '');
-
-    if (mb_strlen($texto) <= $limite) {
-        return $texto;
-    }
-
-    $corte = mb_substr($texto, 0, $limite);
-    $ultimoEspaco = mb_strrpos($corte, ' ');
-
-    if ($ultimoEspaco !== false) {
-        $corte = mb_substr($corte, 0, $ultimoEspaco);
-    }
-
-    return $corte . '…';
-}
+require_once __DIR__ . '/funcoes.php';
 
 $id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
 
@@ -83,7 +18,7 @@ if ($id > 0) {
     $evento = $stmt->fetch();
 
     if (!$evento) {
-        header('Location: evento.php');
+        header('Location: evento.php?erro=evento');
         exit;
     }
 
@@ -109,7 +44,7 @@ if ($id > 0) {
                         class="evento-detalhe-data"
                         datetime="<?php echo date('Y-m-d\TH:i', $dataInicio); ?>"
                     >
-                        <span><?php echo mesAbreviado(date('n', $dataInicio)); ?></span>
+                        <span><?php echo mesPorExtenso(date('n', $dataInicio)); ?></span>
                         <strong><?php echo date('d', $dataInicio); ?></strong>
                         <small><?php echo date('Y', $dataInicio); ?></small>
                     </time>
@@ -188,9 +123,10 @@ if ($id > 0) {
                     </div>
                 </dl>
 
-                <?php if (!empty($evento['link_inscricao'])): ?>
+                <?php $linkInscricao = linkValido($evento['link_inscricao'] ?? null); ?>
+                <?php if ($linkInscricao): ?>
                     <a
-                        href="<?php echo htmlspecialchars($evento['link_inscricao']); ?>"
+                        href="<?php echo htmlspecialchars($linkInscricao); ?>"
                         class="evento-inscricao"
                         target="_blank"
                         rel="noopener noreferrer"
@@ -240,6 +176,10 @@ if ($id > 0) {
             <p>
                 Palestras, encontros, oficinas e atividades abertas à comunidade.
             </p>
+            <?php $mensagemErro = mensagemDeErro($_GET['erro'] ?? ''); ?>
+            <?php if ($mensagemErro !== ''): ?>
+                <p class="alerta-erro"><?php echo htmlspecialchars($mensagemErro); ?></p>
+            <?php endif; ?>
         </div>
     </header>
 
@@ -273,7 +213,7 @@ if ($id > 0) {
                                     datetime="<?php echo date('Y-m-d\TH:i', $dataEvento); ?>"
                                 >
                                     <strong><?php echo date('d', $dataEvento); ?></strong>
-                                    <span><?php echo mesAbreviado(date('n', $dataEvento)); ?></span>
+                                    <span><?php echo mesPorExtenso(date('n', $dataEvento)); ?></span>
                                     <small><?php echo date('Y', $dataEvento); ?></small>
                                 </time>
 
@@ -353,7 +293,7 @@ if ($id > 0) {
                                     datetime="<?php echo date('Y-m-d\TH:i', $dataEvento); ?>"
                                 >
                                     <strong><?php echo date('d', $dataEvento); ?></strong>
-                                    <span><?php echo mesAbreviado(date('n', $dataEvento)); ?></span>
+                                    <span><?php echo mesPorExtenso(date('n', $dataEvento)); ?></span>
                                     <small><?php echo date('Y', $dataEvento); ?></small>
                                 </time>
 

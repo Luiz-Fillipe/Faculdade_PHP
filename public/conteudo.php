@@ -5,7 +5,7 @@ require_once __DIR__ . '/config/conexao.php';
 $slug = trim($_GET['slug'] ?? '');
 
 if ($slug === '') {
-    header('Location: index.php');
+    header('Location: index.php?erro=conteudo');
     exit;
 }
 
@@ -18,14 +18,15 @@ $stmt = $pdo->prepare(
      INNER JOIN categorias cat ON cat.id = c.categoria_id
      INNER JOIN usuarios u ON u.id = c.autor_id
      WHERE c.slug = :slug
-       AND c.status = 'publicado'"
+       AND c.status = 'publicado'
+       AND c.publicado_em IS NOT NULL"
 );
 
 $stmt->execute([':slug' => $slug]);
 $conteudo = $stmt->fetch();
 
 if (!$conteudo) {
-    header('Location: index.php');
+    header('Location: index.php?erro=conteudo');
     exit;
 }
 
