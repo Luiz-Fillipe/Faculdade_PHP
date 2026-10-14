@@ -33,19 +33,6 @@
                 <a href="mailto:contato@portalsi.edu.br">contato@portalsi.edu.br</a>
             </div>
 
-            <nav class="rodape-categorias" aria-label="Categorias">
-                <h2>Categorias</h2>
-                <ul>
-                <?php foreach ($categorias as $cat): ?>
-                    <li>
-                        <a href="<?php echo $basePublica; ?>categoria.php?slug=<?php echo urlencode($cat['slug']); ?>">
-                            <?php echo htmlspecialchars($cat['nome']); ?>
-                        </a>
-                    </li>
-                <?php endforeach; ?>
-                </ul>
-            </nav>
-
             <div class="rodape-marca">
                 <a href="<?php echo $basePublica; ?>index.php" class="rodape-logo">
                     <span class="rodape-logo-sigla">SI</span>

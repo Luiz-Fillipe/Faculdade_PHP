@@ -95,7 +95,7 @@ input {
 .cabecalho-menu-botao {
     width: 42px;
     height: 42px;
-    display: flex;
+    display: none;
     flex-direction: column;
     justify-content: center;
     gap: 6px;
@@ -166,7 +166,7 @@ input {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    gap: 10px;
+    gap: 18px;
 }
 
 .cabecalho-links {
@@ -774,7 +774,7 @@ input {
 .rodape-inferior-grid {
     min-height: 190px;
     display: grid;
-    grid-template-columns: 1fr 1.6fr 0.8fr;
+    grid-template-columns: 1fr 1fr;
     align-items: center;
     gap: 70px;
     padding-top: 36px;
@@ -799,29 +799,6 @@ input {
 }
 
 .rodape-endereco a:hover {
-    color: var(--cor-secundaria);
-}
-
-.rodape-categorias h2 {
-    margin-bottom: 12px;
-    color: var(--cor-secundaria);
-    font-size: 1rem;
-}
-
-.rodape-categorias ul {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(120px, 1fr));
-    gap: 6px 24px;
-    list-style: none;
-}
-
-.rodape-categorias a {
-    color: rgba(255, 255, 255, 0.9);
-    text-decoration: none;
-    font-size: 0.84rem;
-}
-
-.rodape-categorias a:hover {
     color: var(--cor-secundaria);
 }
 
@@ -1239,6 +1216,10 @@ input {
         gap: 10px;
     }
 
+    .cabecalho-menu-botao {
+        display: flex;
+    }
+
     .cabecalho-logo {
         justify-self: center;
     }
@@ -1277,10 +1258,11 @@ input {
 
     .navegacao-controle:checked + .cabecalho .editorias {
         display: block;
+        margin-top: 6px;
     }
 
     .editorias-conteudo {
-        padding: 0;
+        padding: 10px 0;
     }
 
     .editorias-lista {
@@ -1385,10 +1367,6 @@ input {
         grid-template-columns: 1fr;
         gap: 32px;
         text-align: center;
-    }
-
-    .rodape-categorias ul {
-        grid-template-columns: 1fr;
     }
 
     .rodape-marca {

@@ -307,6 +307,80 @@ select {
     transform: translateY(-4px);
 }
 
+.login-publico {
+    max-width: 420px;
+    margin: 48px auto;
+    padding: 36px 32px;
+}
+
+.login-publico h1 {
+    margin-bottom: 8px;
+    color: var(--cor-primaria);
+    font-size: 1.7rem;
+}
+
+.login-publico > p {
+    margin-bottom: 20px;
+    color: var(--cor-texto-suave);
+}
+
+.login-publico label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+.login-publico input {
+    width: 100%;
+    padding: 10px 14px;
+    margin-bottom: 18px;
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio);
+    font-size: 1rem;
+}
+
+.login-publico input:focus {
+    outline: none;
+    border-color: var(--cor-secundaria);
+    box-shadow: 0 0 0 3px rgba(245, 197, 24, 0.25);
+}
+
+.login-publico button {
+    width: 100%;
+    padding: 12px;
+    background: var(--cor-primaria);
+    color: var(--cor-branca);
+    border: none;
+    border-radius: var(--raio);
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background var(--transicao);
+}
+
+.login-publico button:hover {
+    background: var(--cor-primaria-escura);
+}
+
+.login-publico [role="alert"] {
+    margin-bottom: 16px;
+    padding: 10px 14px;
+    background: #fdecea;
+    color: #9c2b1f;
+    border: 1px solid #f5c2bb;
+    border-radius: var(--raio);
+}
+
+.login-publico [role="status"] {
+    margin-bottom: 16px;
+    padding: 10px 14px;
+    background: #eaf6ec;
+    color: #1f7a38;
+    border: 1px solid #c3e6cb;
+    border-radius: var(--raio);
+}
+
 .card-imagem {
     width: 100%;
     height: 210px;
@@ -957,4 +1031,13 @@ select {
     .perfil-nome {
         font-size: 25px;
     }
+}
+
+.alerta-erro {
+    background: #fdecea;
+    color: #9c2b1f;
+    border: 1px solid #f5c2bb;
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin: 16px 0;
 }
