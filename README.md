@@ -30,5 +30,3 @@ Portal institucional em PHP e PostgreSQL. Os arquivos existentes foram mantidos 
 Senhas são armazenadas com `password_hash()` e verificadas com `password_verify()`; sessões usam cookies `HttpOnly`, `SameSite`, modo estrito e regeneração do identificador após autenticação; ações de formulário autenticadas usam token CSRF; consultas usam parâmetros PDO; autorização é conferida no servidor; mensagens de erro de banco não são exibidas ao visitante; uploads aceitam somente formatos de imagem reconhecidos e limitam tamanho.
 
 Nenhum sistema pode ser garantido como livre de todas as falhas apenas por uma revisão do código. Antes de publicar na internet, configure HTTPS, credenciais próprias e fora do código, permissões mínimas no PostgreSQL, backups, atualização de PHP/Apache/PostgreSQL, limite de tentativas de login, política de recuperação de senha e revisão de segurança independente.
-
-O arquivo TXT mencionado não veio dentro do ZIP recebido e não foi localizado na biblioteca disponível. As mudanças identificáveis pela sua mensagem foram implementadas; para aplicar exigências adicionais específicas do TXT, será necessário enviá-lo.
