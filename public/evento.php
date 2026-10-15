@@ -2,20 +2,13 @@
 
 require_once __DIR__ . '/config/conexao.php';
 require_once __DIR__ . '/funcoes.php';
+require_once __DIR__ . '/../app/Controller/EventoController.php';
 
 $id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
+$eventoController = new EventoController($pdo);
 
 if ($id > 0) {
-    $stmt = $pdo->prepare(
-        "SELECT e.*, u.nome AS autor_nome
-         FROM eventos e
-         INNER JOIN usuarios u ON u.id = e.autor_id
-         WHERE e.id = :id
-           AND e.status = 'publicado'"
-    );
-
-    $stmt->execute([':id' => $id]);
-    $evento = $stmt->fetch();
+    $evento = $eventoController->detalhe($id);
 
     if (!$evento) {
         header('Location: evento.php?erro=evento');
@@ -144,24 +137,8 @@ if ($id > 0) {
 
     require_once __DIR__ . '/includes/footer.php';
 } else {
-    $proximos = $pdo->query(
-        "SELECT e.*, u.nome AS autor_nome
-         FROM eventos e
-         INNER JOIN usuarios u ON u.id = e.autor_id
-         WHERE e.status = 'publicado'
-           AND e.data_inicio >= NOW()
-         ORDER BY e.data_inicio ASC"
-    )->fetchAll();
-
-    $encerrados = $pdo->query(
-        "SELECT e.*, u.nome AS autor_nome
-         FROM eventos e
-         INNER JOIN usuarios u ON u.id = e.autor_id
-         WHERE e.status = 'publicado'
-           AND e.data_inicio < NOW()
-         ORDER BY e.data_inicio DESC
-         LIMIT 6"
-    )->fetchAll();
+    $proximos = $eventoController->proximos();
+    $encerrados = $eventoController->encerrados();
 
     $tituloPagina = 'Agenda de Eventos';
 

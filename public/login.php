@@ -2,31 +2,17 @@
 declare(strict_types=1);
 require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../app/helpers/auth.php';
+require_once __DIR__ . '/../app/Controller/AuthController.php';
 if (is_logged_in()) { header('Location: index.php'); exit; }
 $erro = '';
+$authController = new AuthController($pdo);
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     verify_csrf();
     $email = strtolower(trim((string)($_POST['email'] ?? '')));
     $senha = (string)($_POST['senha'] ?? '');
-    if (filter_var($email, FILTER_VALIDATE_EMAIL) && $senha !== '') {
-        $stmt = $pdo->prepare("SELECT id,nome,email,senha_hash,perfil,status,curso FROM usuarios WHERE email=:email LIMIT 1");
-        $stmt->execute([':email'=>$email]);
-        $usuario = $stmt->fetch();
-        if ($usuario && $usuario['status'] === 'ativo' && password_verify($senha, $usuario['senha_hash'])) {
-            if (password_needs_rehash($usuario['senha_hash'], PASSWORD_DEFAULT)) {
-                $hash = password_hash($senha, PASSWORD_DEFAULT);
-                $up = $pdo->prepare('UPDATE usuarios SET senha_hash=:hash WHERE id=:id');
-                $up->execute([':hash'=>$hash, ':id'=>$usuario['id']]);
-            }
-            session_regenerate_id(true);
-            $_SESSION['usuario_id'] = (int)$usuario['id'];
-            $_SESSION['usuario_nome'] = $usuario['nome'];
-            $_SESSION['usuario_email'] = $usuario['email'];
-            $_SESSION['usuario_perfil'] = $usuario['perfil'];
-            $_SESSION['usuario_curso'] = $usuario['curso'];
-            $_SESSION['ultimo_acesso'] = time();
-            header('Location: index.php'); exit;
-        }
+    if ($authController->entrar($email, $senha)) {
+        header('Location: index.php');
+        exit;
     }
     $erro = 'E-mail ou senha inválidos.';
 }

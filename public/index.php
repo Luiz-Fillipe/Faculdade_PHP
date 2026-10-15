@@ -2,85 +2,15 @@
 
 require_once __DIR__ . '/config/conexao.php';
 require_once __DIR__ . '/funcoes.php';
+require_once __DIR__ . '/../app/Controller/HomeController.php';
 
 $busca = trim($_GET['busca'] ?? '');
 $mensagemErro = mensagemDeErro($_GET['erro'] ?? '');
-$destaque = false;
-
-if ($busca === '') {
-    $destaque = $pdo->query(
-        "SELECT c.titulo, c.slug, c.resumo, c.imagem_capa, c.publicado_em,
-                cat.nome AS categoria_nome,
-                cat.slug AS categoria_slug,
-                u.nome AS autor_nome
-         FROM conteudos c
-         INNER JOIN categorias cat ON cat.id = c.categoria_id
-         INNER JOIN usuarios u ON u.id = c.autor_id
-         WHERE c.destaque = TRUE
-           AND c.status = 'publicado'
-           AND c.publicado_em IS NOT NULL
-         ORDER BY c.publicado_em DESC
-         LIMIT 1"
-    )->fetch();
-}
-
-if ($busca !== '') {
-    $stmtPublicacoes = $pdo->prepare(
-        "SELECT c.titulo, c.slug, c.resumo, c.imagem_capa, c.publicado_em,
-                cat.nome AS categoria_nome,
-                cat.slug AS categoria_slug,
-                u.nome AS autor_nome
-         FROM conteudos c
-         INNER JOIN categorias cat ON cat.id = c.categoria_id
-         INNER JOIN usuarios u ON u.id = c.autor_id
-         WHERE c.status = 'publicado'
-           AND c.publicado_em IS NOT NULL
-           AND (c.titulo LIKE :busca OR c.resumo LIKE :busca)
-         ORDER BY c.publicado_em DESC
-         LIMIT 9"
-    );
-    $stmtPublicacoes->execute([':busca' => '%' . $busca . '%']);
-    $publicacoes = $stmtPublicacoes->fetchAll();
-} else {
-    $publicacoes = $pdo->query(
-        "SELECT c.titulo, c.slug, c.resumo, c.imagem_capa, c.publicado_em,
-                cat.nome AS categoria_nome,
-                cat.slug AS categoria_slug,
-                u.nome AS autor_nome
-         FROM conteudos c
-         INNER JOIN categorias cat ON cat.id = c.categoria_id
-         INNER JOIN usuarios u ON u.id = c.autor_id
-         WHERE c.status = 'publicado'
-           AND c.publicado_em IS NOT NULL
-         ORDER BY c.publicado_em DESC
-         LIMIT 9"
-    )->fetchAll();
-}
-
-if ($destaque) {
-    $publicacoes = array_values(
-        array_filter(
-            $publicacoes,
-            function ($publicacao) use ($destaque) {
-                return $publicacao['slug'] !== $destaque['slug'];
-            }
-        )
-    );
-} elseif (!empty($publicacoes)) {
-    $destaque = array_shift($publicacoes);
-}
-
-$chamadas = array_slice($publicacoes, 0, 2);
-$recentes = array_slice($publicacoes, 2, 6);
-
-$eventos = $pdo->query(
-    "SELECT id, titulo, data_inicio, local, link_inscricao
-     FROM eventos
-     WHERE status = 'publicado'
-       AND data_inicio >= NOW()
-     ORDER BY data_inicio ASC
-     LIMIT 3"
-)->fetchAll();
+$dadosHome = (new HomeController($pdo))->carregar($busca);
+$destaque = $dadosHome['destaque'];
+$chamadas = $dadosHome['chamadas'];
+$recentes = $dadosHome['recentes'];
+$eventos = $dadosHome['eventos'];
 
 $tituloPagina = $busca !== '' ? 'Busca' : 'Início';
 

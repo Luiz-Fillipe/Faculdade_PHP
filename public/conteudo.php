@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . '/config/conexao.php';
+require_once __DIR__ . '/../app/Controller/ConteudoController.php';
 
 $slug = trim($_GET['slug'] ?? '');
 
@@ -9,66 +10,16 @@ if ($slug === '') {
     exit;
 }
 
-$stmt = $pdo->prepare(
-    "SELECT c.*,
-            cat.nome AS categoria_nome,
-            cat.slug AS categoria_slug,
-            u.nome AS autor_nome
-     FROM conteudos c
-     INNER JOIN categorias cat ON cat.id = c.categoria_id
-     INNER JOIN usuarios u ON u.id = c.autor_id
-     WHERE c.slug = :slug
-       AND c.status = 'publicado'
-       AND c.publicado_em IS NOT NULL"
-);
-
-$stmt->execute([':slug' => $slug]);
-$conteudo = $stmt->fetch();
+$conteudoController = new ConteudoController($pdo);
+$conteudo = $conteudoController->porSlug($slug);
 
 if (!$conteudo) {
     header('Location: index.php?erro=conteudo');
     exit;
 }
 
-$stmtTags = $pdo->prepare(
-    "SELECT t.nome
-     FROM tags t
-     INNER JOIN conteudo_tags ct ON ct.tag_id = t.id
-     WHERE ct.conteudo_id = :id
-     ORDER BY t.nome"
-);
-
-$stmtTags->execute([':id' => $conteudo['id']]);
-$tags = $stmtTags->fetchAll();
-
-$videoId = null;
-
-if (!empty($conteudo['link_youtube'])) {
-    $partes = parse_url($conteudo['link_youtube']);
-    $host = strtolower($partes['host'] ?? '');
-    $caminho = trim($partes['path'] ?? '', '/');
-
-    if (str_contains($host, 'youtu.be')) {
-        $videoId = explode('/', $caminho)[0] ?? null;
-    } elseif (str_contains($host, 'youtube.com')) {
-        parse_str($partes['query'] ?? '', $parametros);
-
-        if (!empty($parametros['v'])) {
-            $videoId = $parametros['v'];
-        } elseif (str_starts_with($caminho, 'embed/')) {
-            $videoId = substr($caminho, 6);
-        } elseif (str_starts_with($caminho, 'shorts/')) {
-            $videoId = substr($caminho, 7);
-        }
-    }
-
-    if (
-        $videoId !== null
-        && !preg_match('/^[a-zA-Z0-9_-]{6,20}$/', $videoId)
-    ) {
-        $videoId = null;
-    }
-}
+$tags = $conteudoController->tagsDoConteudo((int) $conteudo['id']);
+$videoId = ConteudoController::extrairVideoId($conteudo['link_youtube'] ?? null);
 
 $tituloPagina = $conteudo['titulo'];
 $slugAtual = $conteudo['categoria_slug'];

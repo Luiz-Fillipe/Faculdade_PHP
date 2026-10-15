@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } 
     if ($senha !== $senha_confirmacao) { 
         $erros[] = "A confirmação de senha não confere com a senha informada."; 
-    }/ 
+    }
     if (empty($erros)) { 
         try {
             $senhaHash = password_hash($senha, PASSWORD_DEFAULT); 

@@ -1,35 +1,18 @@
 <?php
 
-
-
-
 require_once __DIR__ . '/config/conexao.php';
+require_once __DIR__ . '/../app/Controller/ConteudoController.php';
 
-$slug = $_GET['slug'] ?? '';
+$slug = trim($_GET['slug'] ?? '');
+$dadosCategoria = (new ConteudoController($pdo))->porCategoriaSlug($slug);
 
-$stmtCategoria = $pdo->prepare(
-    "SELECT * FROM categorias WHERE slug = :slug AND ativo = TRUE"
-);
-$stmtCategoria->execute([':slug' => $slug]);
-$categoria = $stmtCategoria->fetch();
-
-if (!$categoria) {
+if ($dadosCategoria === null) {
     header('Location: index.php?erro=categoria');
     exit;
 }
 
-$stmtConteudos = $pdo->prepare(
-    "SELECT c.titulo, c.slug, c.resumo, c.imagem_capa, c.publicado_em,
-            u.nome AS autor_nome
-     FROM conteudos c
-     INNER JOIN usuarios u ON u.id = c.autor_id
-     WHERE c.categoria_id = :categoria_id
-       AND c.status = 'publicado'
-       AND c.publicado_em IS NOT NULL
-     ORDER BY c.publicado_em DESC"
-);
-$stmtConteudos->execute([':categoria_id' => $categoria['id']]);
-$conteudos = $stmtConteudos->fetchAll();
+$categoria = $dadosCategoria['categoria'];
+$conteudos = $dadosCategoria['conteudos'];
 
 $tituloPagina = $categoria['nome'];
 $slugAtual    = $categoria['slug'];   
