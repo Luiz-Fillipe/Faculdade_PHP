@@ -19,6 +19,19 @@ Portal institucional em PHP e PostgreSQL. Os arquivos existentes foram mantidos 
 7. Salve o projeto no XAMPP com o nome de pasta `portal-si`.
 8. Abra `http://localhost/PE4/portal-si/public/` para a página inicial e `http://localhost/PE4/portal-si/public/login.php` para entrar. Se a pasta `portal-si` estiver diretamente em `htdocs`, retire `/PE4` dessas URLs.
 
+## Banco PostgreSQL no Aiven.io
+
+O PHP roda localmente (XAMPP) e o PostgreSQL fica hospedado no Aiven (plano Free), conforme a apostila da Aula 11 de Projeto de Extensão IV.
+
+1. No Aiven, crie o serviço PostgreSQL Free e o banco do grupo (ex.: `portal_grupo01`).
+2. Copie `.env.example` para `.env` na raiz do projeto e preencha host, porta, banco, usuário e senha do serviço. O `.env` está no `.gitignore`: **nunca** publique a senha nem o Service URI.
+3. Mantenha `PORTAL_DB_SSLMODE=require`: o DSN passa a usar `sslmode=require` e a conexão é criptografada. Para banco local, deixe a variável vazia.
+4. Execute no banco do Aiven, nesta ordem: `database/schema.sql`; `php database/criar_admin.php` (o seed usa esse usuário como autor); `database/seed.sql`; e `database/teste_conexao.sql` (tabela `teste` da atividade).
+5. Abra `public/teste-conexao.php` no navegador: ela mostra o status, o banco, a versão do PostgreSQL e os registros da tabela `teste`. A senha nunca é exibida. Ajuste `GRUPO_NOME` no topo do arquivo.
+6. O CRUD de categorias (cadastrar, listar, alterar e excluir) fica em `public/admin/categorias.php`, acessível pelo menu do painel administrativo.
+
+O plano Free do Aiven desliga o serviço sem uso e permite no máximo 20 conexões simultâneas. Se a conexão falhar, ligue o serviço novamente no console.
+
 ## Interface e Bootstrap
 
 - O portal utiliza Bootstrap 5.3.3 pelo CDN oficial.

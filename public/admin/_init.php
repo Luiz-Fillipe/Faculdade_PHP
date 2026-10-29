@@ -28,6 +28,7 @@ function admin_header(string $title): void
                 <a class="nav-link" href="usuarios.php">Usuários</a>
                 <a class="nav-link" href="conteudos.php">Notícias</a>
                 <a class="nav-link" href="eventos.php">Eventos</a>
+                <a class="nav-link" href="categorias.php">Categorias</a>
             <?php endif; ?>
             <a class="nav-link" href="../index.php">Site público</a>
             <form method="post" action="logout.php" class="inline">
