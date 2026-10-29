@@ -32,6 +32,22 @@ O PHP roda localmente (XAMPP) e o PostgreSQL fica hospedado no Aiven (plano Free
 
 O plano Free do Aiven desliga o serviço sem uso e permite no máximo 20 conexões simultâneas. Se a conexão falhar, ligue o serviço novamente no console.
 
+## Exibição dinâmica (Etapa 2)
+
+Tudo que o visitante vê vem do PostgreSQL a cada requisição; publicar uma notícia no painel não exige mexer no código.
+
+| Item da Aula 12 | Onde está |
+| --- | --- |
+| Consultas com `INNER JOIN` (conteúdos, categorias, usuários) | `app/Controller/ConteudoController.php`, `HomeController.php` |
+| `LEFT JOIN` com contagem por categoria (inclui categorias vazias) | `ConteudoController::categoriasComTotal()`, chips da Home |
+| Filtro por categoria por query string | `public/categoria.php?slug=...` |
+| Paginação (`COUNT(*)`, `LIMIT`/`OFFSET` com `PDO::PARAM_INT`, 6 por página) | `ConteudoController::porCategoriaSlug()` e `calcularPaginacao()` |
+| Detalhe pelo identificador | `public/conteudo.php?slug=...` ou `?id=...` |
+| Vídeo do YouTube em 16:9 | `.publicacao-video` (`aspect-ratio`) em `public/css/style.css` |
+| Identificadores validados com `filter_input` e `404` amigável | `paginaNaoEncontrada()` em `public/funcoes.php` |
+| Estado vazio, datas `dd/mm/aaaa`, `alt` nas imagens | páginas públicas |
+| Erro do PDO nunca na tela (vai para `error_log`) | `catch` das páginas públicas e do painel |
+
 ## Interface e Bootstrap
 
 - O portal utiliza Bootstrap 5.3.3 pelo CDN oficial.

@@ -4,15 +4,19 @@ require_once __DIR__ . '/config/conexao.php';
 require_once __DIR__ . '/funcoes.php';
 require_once __DIR__ . '/../app/Controller/EventoController.php';
 
-$id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
+$id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
 $eventoController = new EventoController($pdo);
 
-if ($id > 0) {
+// ?id= informado, mas inválido: não é a agenda, é um evento que não existe.
+if (isset($_GET['id']) && !$id) {
+    paginaNaoEncontrada('Esse evento não foi encontrado.');
+}
+
+if ($id) {
     $evento = $eventoController->detalhe($id);
 
     if (!$evento) {
-        header('Location: evento.php?erro=evento');
-        exit;
+        paginaNaoEncontrada('Esse evento não foi encontrado.');
     }
 
     $tituloPagina = $evento['titulo'];

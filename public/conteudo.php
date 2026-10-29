@@ -1,21 +1,24 @@
 <?php
 
 require_once __DIR__ . '/config/conexao.php';
+require_once __DIR__ . '/funcoes.php';
 require_once __DIR__ . '/../app/Controller/ConteudoController.php';
 
-$slug = trim($_GET['slug'] ?? '');
-
-if ($slug === '') {
-    header('Location: index.php?erro=conteudo');
-    exit;
-}
+// A publicação é aberta pelo slug (endereço amigável) ou pelo identificador (?id=).
+$slug = trim((string) ($_GET['slug'] ?? ''));
+$id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 
 $conteudoController = new ConteudoController($pdo);
-$conteudo = $conteudoController->porSlug($slug);
+$conteudo = null;
+
+if ($slug !== '') {
+    $conteudo = $conteudoController->porSlug($slug);
+} elseif ($id !== null && $id !== false && $id > 0) {
+    $conteudo = $conteudoController->porId($id);
+}
 
 if (!$conteudo) {
-    header('Location: index.php?erro=conteudo');
-    exit;
+    paginaNaoEncontrada('Essa publicação não foi encontrada.');
 }
 
 $tags = $conteudoController->tagsDoConteudo((int) $conteudo['id']);

@@ -7,7 +7,11 @@ class ConteudoController
     {
     }
 
-    public function porCategoriaSlug(string $slug): ?array
+    /**
+     * Categoria ativa com suas publicações paginadas.
+     * Paginação: COUNT(*) para o total e LIMIT/OFFSET (vinculados como inteiros).
+     */
+    public function porCategoriaSlug(string $slug, int $pagina = 1, int $porPagina = 6): ?array
     {
         $stmtCategoria = $this->pdo->prepare(
             "SELECT * FROM categorias WHERE slug = :slug AND ativo = TRUE"
@@ -19,6 +23,18 @@ class ConteudoController
             return null;
         }
 
+        $stmtTotal = $this->pdo->prepare(
+            "SELECT COUNT(*)
+             FROM conteudos
+             WHERE categoria_id = :categoria_id
+               AND status = 'publicado'
+               AND publicado_em IS NOT NULL"
+        );
+        $stmtTotal->execute([':categoria_id' => $categoria['id']]);
+        $total = (int) $stmtTotal->fetchColumn();
+
+        $paginacao = self::calcularPaginacao($total, $pagina, $porPagina);
+
         $stmtConteudos = $this->pdo->prepare(
             "SELECT c.titulo, c.slug, c.resumo, c.imagem_capa, c.publicado_em,
                     u.nome AS autor_nome
@@ -27,17 +43,50 @@ class ConteudoController
              WHERE c.categoria_id = :categoria_id
                AND c.status = 'publicado'
                AND c.publicado_em IS NOT NULL
-             ORDER BY c.publicado_em DESC"
+             ORDER BY c.publicado_em DESC
+             LIMIT :limite OFFSET :offset"
         );
-        $stmtConteudos->execute([':categoria_id' => $categoria['id']]);
+        $stmtConteudos->bindValue(':categoria_id', (int) $categoria['id'], PDO::PARAM_INT);
+        $stmtConteudos->bindValue(':limite', $porPagina, PDO::PARAM_INT);
+        $stmtConteudos->bindValue(':offset', $paginacao['offset'], PDO::PARAM_INT);
+        $stmtConteudos->execute();
 
         return [
             'categoria' => $categoria,
             'conteudos' => $stmtConteudos->fetchAll(),
+            'total' => $total,
+            'pagina' => $paginacao['paginaAtual'],
+            'totalPaginas' => $paginacao['totalPaginas'],
+        ];
+    }
+
+    /**
+     * OFFSET = (página - 1) * registros por página. A página é ajustada ao
+     * intervalo válido (1 até o total de páginas).
+     */
+    public static function calcularPaginacao(int $total, int $pagina, int $porPagina): array
+    {
+        $totalPaginas = (int) ceil($total / max(1, $porPagina));
+        $pagina = max(1, min($pagina, max(1, $totalPaginas)));
+
+        return [
+            'offset' => ($pagina - 1) * $porPagina,
+            'totalPaginas' => $totalPaginas,
+            'paginaAtual' => $pagina,
         ];
     }
 
     public function porSlug(string $slug): ?array
+    {
+        return $this->buscarPublicado('c.slug = :valor', [':valor' => $slug]);
+    }
+
+    public function porId(int $id): ?array
+    {
+        return $this->buscarPublicado('c.id = :valor', [':valor' => $id]);
+    }
+
+    private function buscarPublicado(string $condicao, array $parametros): ?array
     {
         $stmt = $this->pdo->prepare(
             "SELECT c.*,
@@ -47,14 +96,33 @@ class ConteudoController
              FROM conteudos c
              INNER JOIN categorias cat ON cat.id = c.categoria_id
              INNER JOIN usuarios u ON u.id = c.autor_id
-             WHERE c.slug = :slug
+             WHERE {$condicao}
                AND c.status = 'publicado'
                AND c.publicado_em IS NOT NULL"
         );
-        $stmt->execute([':slug' => $slug]);
+        $stmt->execute($parametros);
         $conteudo = $stmt->fetch();
 
         return $conteudo ?: null;
+    }
+
+    /**
+     * Todas as categorias ativas com o total de publicações. LEFT JOIN mantém
+     * as categorias que ainda não têm nenhum conteúdo (total 0).
+     */
+    public function categoriasComTotal(): array
+    {
+        return $this->pdo->query(
+            "SELECT cat.id, cat.nome, cat.slug, COUNT(c.id) AS total
+             FROM categorias cat
+             LEFT JOIN conteudos c
+                    ON c.categoria_id = cat.id
+                   AND c.status = 'publicado'
+                   AND c.publicado_em IS NOT NULL
+             WHERE cat.ativo = TRUE
+             GROUP BY cat.id, cat.nome, cat.slug
+             ORDER BY cat.ordem, cat.nome"
+        )->fetchAll();
     }
 
     public function tagsDoConteudo(int $conteudoId): array

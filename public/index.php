@@ -3,8 +3,10 @@
 require_once __DIR__ . '/config/conexao.php';
 require_once __DIR__ . '/funcoes.php';
 require_once __DIR__ . '/../app/Controller/HomeController.php';
+require_once __DIR__ . '/../app/Controller/ConteudoController.php';
 
 $busca = trim($_GET['busca'] ?? '');
+$categoriasComTotal = (new ConteudoController($pdo))->categoriasComTotal();
 $mensagemErro = mensagemDeErro($_GET['erro'] ?? '');
 $dadosHome = (new HomeController($pdo))->carregar($busca);
 $destaque = $dadosHome['destaque'];
@@ -136,6 +138,26 @@ require_once __DIR__ . '/includes/header.php';
                             </p>
                         </div>
                     </article>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </section>
+<?php endif; ?>
+
+<?php if ($busca === '' && !empty($categoriasComTotal)): ?>
+    <section class="home-categorias">
+        <div class="container">
+            <div class="home-secao-titulo">
+                <h2>Navegue por categoria</h2>
+                <span></span>
+            </div>
+
+            <div class="lista-categorias">
+                <?php foreach ($categoriasComTotal as $cat): ?>
+                    <a class="chip-categoria" href="categoria.php?slug=<?php echo urlencode($cat['slug']); ?>">
+                        <?php echo htmlspecialchars($cat['nome'], ENT_QUOTES, 'UTF-8'); ?>
+                        <span class="chip-total"><?php echo (int) $cat['total']; ?></span>
+                    </a>
                 <?php endforeach; ?>
             </div>
         </div>

@@ -15,11 +15,10 @@ function iniciaisDoNome($nome)
     return mb_strtoupper($iniciais);
 }
 
-$id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
+$id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
 
-if ($id <= 0) {
-    header('Location: index.php?erro=usuario');
-    exit;
+if (!$id) {
+    paginaNaoEncontrada('Esse usuário não foi encontrado.');
 }
 
 $stmtUsuario = $pdo->prepare(
@@ -33,8 +32,7 @@ $stmtUsuario->execute([':id' => $id]);
 $usuario = $stmtUsuario->fetch();
 
 if (!$usuario) {
-    header('Location: index.php?erro=usuario');
-    exit;
+    paginaNaoEncontrada('Esse usuário não foi encontrado.');
 }
 
 $stmtTotConteudos = $pdo->prepare(
