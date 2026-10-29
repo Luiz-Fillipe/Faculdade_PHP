@@ -101,3 +101,36 @@ function paginaNaoEncontrada(string $mensagem): void
     require __DIR__ . '/includes/footer.php';
     exit;
 }
+
+/**
+ * Tempo decorrido em linguagem de portal de notícias: "há 7 min", "há 3 horas",
+ * "ontem" e, depois disso, a data em dd/mm/aaaa.
+ */
+function tempoRelativo(string $data): string
+{
+    $diferenca = time() - strtotime($data);
+
+    if ($diferenca < 60) {
+        return 'agora há pouco';
+    }
+    if ($diferenca < 3600) {
+        return 'há ' . (int) floor($diferenca / 60) . ' min';
+    }
+    if ($diferenca < 86400) {
+        $horas = (int) floor($diferenca / 3600);
+        return 'há ' . $horas . ($horas === 1 ? ' hora' : ' horas');
+    }
+    if ($diferenca < 172800) {
+        return 'ontem';
+    }
+
+    return date('d/m/Y', strtotime($data));
+}
+
+/** Data de hoje por extenso, ex.: "Quinta-feira, 29 de outubro". */
+function dataDeHoje(): string
+{
+    $dias = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'];
+
+    return $dias[(int) date('w')] . ', ' . date('j') . ' de ' . mesPorExtenso(date('n'));
+}

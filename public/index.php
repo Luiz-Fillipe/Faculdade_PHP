@@ -20,187 +20,138 @@ require_once __DIR__ . '/includes/header.php';
 
 ?>
 
-<?php if ($mensagemErro !== ''): ?>
-    <div class="container">
+<div class="container pt-4">
+    <?php if ($mensagemErro !== ''): ?>
         <p class="alerta-erro"><?php echo htmlspecialchars($mensagemErro); ?></p>
-    </div>
-<?php endif; ?>
+    <?php endif; ?>
 
-<section class="home-destaques">
-    <div class="container">
-        <?php if ($destaque): ?>
-            <div class="home-destaques-grid">
-                <article class="home-principal card">
-                    <a href="conteudo.php?slug=<?php echo urlencode($destaque['slug']); ?>" class="home-principal-imagem<?php echo empty($destaque['imagem_capa']) ? ' home-imagem-vazia' : ''; ?>">
-                        <?php if (!empty($destaque['imagem_capa'])): ?>
-                            <img src="<?php echo htmlspecialchars($destaque['imagem_capa']); ?>" alt="<?php echo htmlspecialchars($destaque['titulo']); ?>">
-                        <?php else: ?>
-                            <span>Portal SI</span>
-                        <?php endif; ?>
-                    </a>
+    <?php if ($busca !== ''): ?>
+        <p class="ed-busca-titulo">Resultados para <strong>“<?php echo htmlspecialchars($busca); ?>”</strong></p>
+    <?php endif; ?>
+</div>
 
-                    <div class="home-principal-conteudo">
-                        <a href="categoria.php?slug=<?php echo urlencode($destaque['categoria_slug']); ?>" class="home-categoria">
-                            <?php echo htmlspecialchars($destaque['categoria_nome']); ?>
-                        </a>
+<?php if ($destaque): ?>
+    <section class="ed-abertura">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-8">
+                    <article class="ed-manchete">
+                        <p class="ed-meta">
+                            <a class="ed-kicker" href="categoria.php?slug=<?php echo urlencode($destaque['categoria_slug']); ?>"><?php echo htmlspecialchars($destaque['categoria_nome']); ?></a>
+                            <span aria-hidden="true">·</span>
+                            <time datetime="<?php echo date('Y-m-d\TH:i', strtotime($destaque['publicado_em'])); ?>"><?php echo htmlspecialchars(tempoRelativo($destaque['publicado_em'])); ?></time>
+                        </p>
 
-                        <h1>
-                            <a href="conteudo.php?slug=<?php echo urlencode($destaque['slug']); ?>">
-                                <?php echo htmlspecialchars($destaque['titulo']); ?>
-                            </a>
+                        <h1 class="ed-manchete-titulo">
+                            <a href="conteudo.php?slug=<?php echo urlencode($destaque['slug']); ?>"><?php echo htmlspecialchars($destaque['titulo']); ?></a>
                         </h1>
 
                         <?php if (!empty($destaque['resumo'])): ?>
-                            <p class="home-principal-resumo"><?php echo htmlspecialchars($destaque['resumo']); ?></p>
+                            <p class="ed-manchete-resumo"><?php echo htmlspecialchars($destaque['resumo']); ?></p>
                         <?php endif; ?>
 
-                        <p class="home-meta">
-                            <?php echo date('d/m/Y', strtotime($destaque['publicado_em'])); ?>
-                            <span></span>
-                            Por <?php echo htmlspecialchars($destaque['autor_nome']); ?>
-                        </p>
-                    </div>
-                </article>
-
-                <?php if (!empty($chamadas)): ?>
-                    <div class="home-chamadas">
-                        <?php foreach ($chamadas as $publicacao): ?>
-                            <article class="home-chamada card">
-                                <a href="conteudo.php?slug=<?php echo urlencode($publicacao['slug']); ?>" class="home-chamada-imagem<?php echo empty($publicacao['imagem_capa']) ? ' home-imagem-vazia' : ''; ?>">
-                                    <?php if (!empty($publicacao['imagem_capa'])): ?>
-                                        <img src="<?php echo htmlspecialchars($publicacao['imagem_capa']); ?>" alt="<?php echo htmlspecialchars($publicacao['titulo']); ?>" loading="lazy">
-                                    <?php else: ?>
-                                        <span>Portal SI</span>
-                                    <?php endif; ?>
-                                </a>
-
-                                <div class="home-chamada-conteudo">
-                                    <a href="categoria.php?slug=<?php echo urlencode($publicacao['categoria_slug']); ?>" class="home-categoria">
-                                        <?php echo htmlspecialchars($publicacao['categoria_nome']); ?>
-                                    </a>
-                                    <h2>
-                                        <a href="conteudo.php?slug=<?php echo urlencode($publicacao['slug']); ?>">
-                                            <?php echo htmlspecialchars($publicacao['titulo']); ?>
-                                        </a>
-                                    </h2>
-                                    <p class="home-meta"><?php echo date('d/m/Y', strtotime($publicacao['publicado_em'])); ?></p>
-                                </div>
-                            </article>
-                        <?php endforeach; ?>
-                    </div>
-                <?php endif; ?>
-            </div>
-        <?php else: ?>
-            <div class="home-sem-destaque">
-                <span>Portal SI</span>
-                <h1><?php echo $busca !== '' ? 'Nenhum resultado encontrado' : 'Informação institucional em um só lugar'; ?></h1>
-                <p><?php echo $busca !== '' ? 'Tente pesquisar usando outras palavras.' : 'Acompanhe notícias, comunicados, publicações e eventos.'; ?></p>
-            </div>
-        <?php endif; ?>
-    </div>
-</section>
-
-<?php if (!empty($recentes)): ?>
-    <section class="home-noticias">
-        <div class="container">
-            <div class="home-secao-titulo">
-                <h2><?php echo $busca !== '' ? 'Mais resultados' : 'Últimas publicações'; ?></h2>
-                <span></span>
-            </div>
-
-            <div class="home-noticias-grid">
-                <?php foreach ($recentes as $publicacao): ?>
-                    <article class="home-noticia card border-0">
-                        <a href="conteudo.php?slug=<?php echo urlencode($publicacao['slug']); ?>" class="home-noticia-imagem<?php echo empty($publicacao['imagem_capa']) ? ' home-imagem-vazia' : ''; ?>">
-                            <?php if (!empty($publicacao['imagem_capa'])): ?>
-                                <img src="<?php echo htmlspecialchars($publicacao['imagem_capa']); ?>" alt="<?php echo htmlspecialchars($publicacao['titulo']); ?>" loading="lazy">
+                        <a class="ed-manchete-imagem<?php echo empty($destaque['imagem_capa']) ? ' sem-imagem' : ''; ?>" href="conteudo.php?slug=<?php echo urlencode($destaque['slug']); ?>" tabindex="-1" aria-hidden="true">
+                            <?php if (!empty($destaque['imagem_capa'])): ?>
+                                <img src="<?php echo htmlspecialchars($destaque['imagem_capa']); ?>" alt="">
                             <?php else: ?>
                                 <span>Portal SI</span>
                             <?php endif; ?>
                         </a>
+                    </article>
+                </div>
 
-                        <div class="home-noticia-conteudo">
-                            <a href="categoria.php?slug=<?php echo urlencode($publicacao['categoria_slug']); ?>" class="home-categoria">
-                                <?php echo htmlspecialchars($publicacao['categoria_nome']); ?>
-                            </a>
-                            <h3>
-                                <a href="conteudo.php?slug=<?php echo urlencode($publicacao['slug']); ?>">
-                                    <?php echo htmlspecialchars($publicacao['titulo']); ?>
+                <?php if (!empty($chamadas)): ?>
+                    <div class="col-lg-4">
+                        <div class="ed-tiles">
+                            <?php foreach ($chamadas as $publicacao): ?>
+                                <a class="ed-tile<?php echo empty($publicacao['imagem_capa']) ? ' sem-imagem' : ''; ?>" href="conteudo.php?slug=<?php echo urlencode($publicacao['slug']); ?>">
+                                    <?php if (!empty($publicacao['imagem_capa'])): ?>
+                                        <img src="<?php echo htmlspecialchars($publicacao['imagem_capa']); ?>" alt="" loading="lazy">
+                                    <?php endif; ?>
+                                    <span class="ed-tile-texto">
+                                        <span class="ed-chip"><?php echo htmlspecialchars($publicacao['categoria_nome']); ?></span>
+                                        <strong class="ed-tile-titulo"><?php echo htmlspecialchars($publicacao['titulo']); ?></strong>
+                                        <span class="ed-tile-tempo"><?php echo htmlspecialchars(tempoRelativo($publicacao['publicado_em'])); ?></span>
+                                    </span>
                                 </a>
-                            </h3>
-                            <?php if (!empty($publicacao['resumo'])): ?>
-                                <p class="home-noticia-resumo"><?php echo htmlspecialchars($publicacao['resumo']); ?></p>
-                            <?php endif; ?>
-                            <p class="home-meta">
-                                <?php echo date('d/m/Y', strtotime($publicacao['publicado_em'])); ?>
-                                <span></span>
-                                <?php echo htmlspecialchars($publicacao['autor_nome']); ?>
-                            </p>
+                            <?php endforeach; ?>
                         </div>
-                    </article>
-                <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
     </section>
-<?php endif; ?>
-
-<?php if ($busca === '' && !empty($categoriasComTotal)): ?>
-    <section class="home-categorias">
-        <div class="container">
-            <div class="home-secao-titulo">
-                <h2>Navegue por categoria</h2>
-                <span></span>
-            </div>
-
-            <div class="lista-categorias">
-                <?php foreach ($categoriasComTotal as $cat): ?>
-                    <a class="chip-categoria" href="categoria.php?slug=<?php echo urlencode($cat['slug']); ?>">
-                        <?php echo htmlspecialchars($cat['nome'], ENT_QUOTES, 'UTF-8'); ?>
-                        <span class="chip-total"><?php echo (int) $cat['total']; ?></span>
-                    </a>
-                <?php endforeach; ?>
-            </div>
-        </div>
+<?php else: ?>
+    <section class="container ed-vazio-home">
+        <p class="estado-vazio">
+            <?php echo $busca !== '' ? 'Nenhum resultado encontrado. Tente pesquisar usando outras palavras.' : 'Ainda não há publicações. Volte em breve.'; ?>
+        </p>
     </section>
 <?php endif; ?>
 
-<?php if (!empty($eventos) && $busca === ''): ?>
-    <section class="home-agenda">
-        <div class="container">
-            <div class="home-secao-titulo">
-                <h2>Agenda institucional</h2>
-                <span></span>
+<section class="ed-corpo">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-lg-8">
+                <?php if (!empty($recentes)): ?>
+                    <div class="ed-titulo-secao">
+                        <h2><?php echo $busca !== '' ? 'Mais resultados' : 'Últimas notícias'; ?></h2>
+                    </div>
+
+                    <?php foreach ($recentes as $item): ?>
+                        <?php include __DIR__ . '/includes/item_lista.php'; ?>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </div>
 
-            <div class="home-eventos-grid">
-                <?php foreach ($eventos as $evento): ?>
-                    <article class="home-evento card">
-                        <time class="home-evento-data" datetime="<?php echo date('Y-m-d', strtotime($evento['data_inicio'])); ?>">
-                            <strong><?php echo date('d', strtotime($evento['data_inicio'])); ?></strong>
-                            <span><?php echo mesPorExtenso(date('n', strtotime($evento['data_inicio']))); ?></span>
-                            <small><?php echo date('H:i', strtotime($evento['data_inicio'])); ?></small>
-                        </time>
+            <aside class="col-lg-4 ps-lg-4" aria-label="Barra lateral">
+                <?php if ($busca === '' && !empty($categoriasComTotal)): ?>
+                    <div class="ed-lateral">
+                        <div class="ed-titulo-secao"><h2>Editorias</h2></div>
+                        <ul class="ed-lista-editorias">
+                            <?php foreach ($categoriasComTotal as $cat): ?>
+                                <li>
+                                    <a href="categoria.php?slug=<?php echo urlencode($cat['slug']); ?>">
+                                        <span><?php echo htmlspecialchars($cat['nome'], ENT_QUOTES, 'UTF-8'); ?></span>
+                                        <b><?php echo (int) $cat['total']; ?></b>
+                                    </a>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                <?php endif; ?>
 
-                        <div class="home-evento-conteudo">
-                            <h3><?php echo htmlspecialchars($evento['titulo']); ?></h3>
-                            <p><?php echo htmlspecialchars($evento['local'] ?: 'Local a definir'); ?></p>
+                <?php if (!empty($eventos) && $busca === ''): ?>
+                    <div class="ed-lateral">
+                        <div class="ed-titulo-secao">
+                            <h2>Agenda</h2>
+                            <a href="evento.php">Ver tudo</a>
                         </div>
 
-                        <?php $linkInscricao = linkValido($evento['link_inscricao'] ?? null); ?>
-                        <?php if ($linkInscricao): ?>
-                            <a href="<?php echo htmlspecialchars($linkInscricao); ?>" class="home-evento-link" target="_blank" rel="noopener noreferrer">Inscreva-se</a>
-                        <?php else: ?>
-                            <a href="evento.php?id=<?php echo (int) $evento['id']; ?>" class="home-evento-link">Ver evento</a>
-                        <?php endif; ?>
-                    </article>
-                <?php endforeach; ?>
-            </div>
-
-            <div class="home-agenda-rodape">
-                <a href="evento.php">Ver agenda completa</a>
-            </div>
+                        <ul class="ed-agenda">
+                            <?php foreach ($eventos as $evento): ?>
+                                <?php $inicio = strtotime($evento['data_inicio']); ?>
+                                <li>
+                                    <time class="ed-agenda-data" datetime="<?php echo date('Y-m-d', $inicio); ?>">
+                                        <strong><?php echo date('d', $inicio); ?></strong>
+                                        <span><?php echo htmlspecialchars(mb_substr(mesPorExtenso(date('n', $inicio)), 0, 3, 'UTF-8')); ?></span>
+                                    </time>
+                                    <div>
+                                        <a class="ed-agenda-titulo" href="evento.php?id=<?php echo (int) $evento['id']; ?>"><?php echo htmlspecialchars($evento['titulo']); ?></a>
+                                        <p class="ed-meta">
+                                            <?php echo date('H:i', $inicio); ?>
+                                            <span aria-hidden="true">·</span>
+                                            <?php echo htmlspecialchars($evento['local'] ?: 'Local a definir'); ?>
+                                        </p>
+                                    </div>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                <?php endif; ?>
+            </aside>
         </div>
-    </section>
-<?php endif; ?>
+    </div>
+</section>
 
 <?php require_once __DIR__ . '/includes/footer.php'; ?>

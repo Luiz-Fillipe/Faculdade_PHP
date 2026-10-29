@@ -1,6 +1,9 @@
 <?php
 declare(strict_types=1);
 
+// Datas e horas exibidas no portal seguem o horário de Brasília.
+date_default_timezone_set('America/Sao_Paulo');
+
 // Carrega o arquivo .env da raiz do projeto (ignorado pelo Git), quando existir.
 // Variáveis já definidas no ambiente do sistema têm prioridade sobre o .env.
 $arquivoEnv = __DIR__ . '/../.env';
