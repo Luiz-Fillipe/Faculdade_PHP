@@ -5,7 +5,7 @@ declare(strict_types=1);
 // Não depende do schema do portal e nunca exibe a senha do banco.
 require_once __DIR__ . '/config/conexao.php';
 
-const GRUPO_NOME = 'Grupo 01';
+const GRUPO_NOME = 'Grupo Power';
 const SERVIDOR_NOME = 'Aiven';
 
 $erro = false;
