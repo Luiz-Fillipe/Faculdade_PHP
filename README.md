@@ -71,6 +71,7 @@ Transparência: o código já traz uma estrutura inicial para imagem de capa, v�
    (ele **apaga e recria** as tabelas do banco selecionado; confira o banco antes)
 4. Crie o administrador de teste: `php database/criar_admin.php`
 5. Carregue os dados iniciais: `psql -U postgres -d portal_si -f database/seed.sql`
+   (opcional, para a demonstração: `psql -U postgres -d portal_si -f database/demo.sql` carrega 12 conteúdos fictícios só de texto)
 6. Copie `.env.example` para `.env` e ajuste a conexão (veja a seção seguinte)
 7. Aponte o servidor web para a pasta `public/` e acesse, por exemplo, `http://localhost/portal-si/public/`
 
@@ -109,7 +110,7 @@ Tabelas principais: `usuarios`, `categorias` e `conteudos`. Também existem `tag
     portal-si/
     ├── app/            consultas e regras (Controller), views auxiliares e funções de sessão (helpers)
     ├── config/         conexão com o banco (database.php)
-    ├── database/       schema.sql, seed.sql, criar_admin.php e teste_conexao.sql
+    ├── database/       schema.sql, seed.sql, demo.sql (conteúdo fictício), criar_admin.php e teste_conexao.sql
     ├── docs/           documentação, matriz de testes, defeitos e modelo de dados
     └── public/         raiz do site (única pasta exposta ao navegador)
         ├── admin/      área restrita: notícias, eventos, usuários, categorias e perfil
@@ -192,6 +193,9 @@ Os 6 casos restantes dependem de imagem, upload ou vídeo e estão suspensos nes
 - [Matriz de casos de teste](docs/matriz-de-testes.md)
 - [Registro de defeitos](docs/registro-de-defeitos.md)
 - [Modelo de dados e dicionário](docs/modelo-de-dados.md)
+- [Apêndice B — Script do banco](docs/Apendice-B-Script-do-Banco.docx)
+- [Apêndice C — Dicionário de dados](docs/Apendice-C-Dicionario-de-Dados.docx)
+- [Slides da apresentação final](docs/Apresentacao-Portal-SI.pptx) e [roteiro de fala e demonstração](docs/roteiro-apresentacao.md)
 
 ## Referências
 
