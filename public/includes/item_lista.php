@@ -4,7 +4,7 @@
 // opcionalmente, categoria_nome / categoria_slug / autor_nome.
 $linkItem = 'conteudo.php?slug=' . urlencode($item['slug']);
 ?>
-<article class="ed-item">
+<article class="ed-item<?php echo empty($item['imagem_capa']) ? ' ed-item-so-texto' : ''; ?>">
     <div class="ed-item-texto">
         <?php if (!empty($item['categoria_nome'])): ?>
             <a class="ed-kicker" href="categoria.php?slug=<?php echo urlencode($item['categoria_slug']); ?>"><?php echo htmlspecialchars($item['categoria_nome']); ?></a>
@@ -26,11 +26,9 @@ $linkItem = 'conteudo.php?slug=' . urlencode($item['slug']);
         </p>
     </div>
 
-    <a class="ed-item-imagem<?php echo empty($item['imagem_capa']) ? ' sem-imagem' : ''; ?>" href="<?php echo $linkItem; ?>" tabindex="-1" aria-hidden="true">
-        <?php if (!empty($item['imagem_capa'])): ?>
+    <?php if (!empty($item['imagem_capa'])): ?>
+        <a class="ed-item-imagem" href="<?php echo $linkItem; ?>" tabindex="-1" aria-hidden="true">
             <img src="<?php echo htmlspecialchars($item['imagem_capa']); ?>" alt="" loading="lazy">
-        <?php else: ?>
-            <span>Portal SI</span>
-        <?php endif; ?>
-    </a>
+        </a>
+    <?php endif; ?>
 </article>

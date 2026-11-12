@@ -7,7 +7,7 @@
 :root {
     --ed-largura: 1180px;
     --ed-filete: #d7dce3;
-    --ed-texto-meta: #6b7280;
+    --ed-texto-meta: #5f6368;
     --ed-azul-claro: #1d3d6e;
 }
 
@@ -376,7 +376,9 @@ a.ed-kicker:hover {
     place-items: center;
 }
 
-.sem-imagem span {
+/* Só o rótulo do bloco sem imagem; o texto dos destaques (.ed-tile) não deve herdar este estilo. */
+.ed-manchete-imagem.sem-imagem span,
+.ed-item-imagem.sem-imagem span {
     color: rgba(255, 255, 255, 0.55);
     font-size: 15px;
     font-weight: 800;
@@ -935,4 +937,14 @@ a.ed-kicker:hover {
     .publicacao-texto {
         font-size: 17px;
     }
+}
+
+/* Conteúdo só de texto: o item ocupa a largura toda, sem coluna de imagem. */
+.ed-item-so-texto {
+    grid-template-columns: minmax(0, 1fr);
+}
+
+/* Destaque só de texto: card mais baixo, sem a proporção reservada para a foto. */
+.ed-tile.sem-imagem {
+    aspect-ratio: 16 / 7;
 }

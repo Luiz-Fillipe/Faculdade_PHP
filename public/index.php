@@ -50,13 +50,11 @@ require_once __DIR__ . '/includes/header.php';
                             <p class="ed-manchete-resumo"><?php echo htmlspecialchars($destaque['resumo']); ?></p>
                         <?php endif; ?>
 
-                        <a class="ed-manchete-imagem<?php echo empty($destaque['imagem_capa']) ? ' sem-imagem' : ''; ?>" href="conteudo.php?slug=<?php echo urlencode($destaque['slug']); ?>" tabindex="-1" aria-hidden="true">
-                            <?php if (!empty($destaque['imagem_capa'])): ?>
+                        <?php if (!empty($destaque['imagem_capa'])): ?>
+                            <a class="ed-manchete-imagem" href="conteudo.php?slug=<?php echo urlencode($destaque['slug']); ?>" tabindex="-1" aria-hidden="true">
                                 <img src="<?php echo htmlspecialchars($destaque['imagem_capa']); ?>" alt="">
-                            <?php else: ?>
-                                <span>Portal SI</span>
-                            <?php endif; ?>
-                        </a>
+                            </a>
+                        <?php endif; ?>
                     </article>
                 </div>
 

@@ -28,9 +28,11 @@ function public_base_path(): string
     if ($pos !== false) {
         return substr($script, 0, $pos + strlen('/public'));
     }
-    $directory = rtrim(dirname($script), '/.');
+    // dirname() devolve "\" no Windows quando o pai é a raiz; normaliza para "/" e para vazio.
+    $directory = rtrim(str_replace('\\', '/', dirname($script)), '/.');
     if (str_ends_with($directory, '/admin')) {
-        return dirname($directory);
+        $pai = str_replace('\\', '/', dirname($directory));
+        return $pai === '/' ? '' : $pai;
     }
     return $directory;
 }
