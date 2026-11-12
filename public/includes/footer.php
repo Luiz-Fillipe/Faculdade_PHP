@@ -33,9 +33,8 @@
         <div class="rodape-coluna">
             <h2>Contato</h2>
             <address>
-                Av. Principal, 1000<br>
-                (00) 0000-0000<br>
-                <a href="mailto:contato@portalsi.edu.br">contato@portalsi.edu.br</a>
+                <a href="mailto:<?php echo htmlspecialchars(CONTATO_EMAIL, ENT_QUOTES, 'UTF-8'); ?>"><?php echo htmlspecialchars(CONTATO_EMAIL, ENT_QUOTES, 'UTF-8'); ?></a><br>
+                <a href="<?php echo $basePublica; ?>contato.php">Mais formas de contato</a>
             </address>
         </div>
     </div>

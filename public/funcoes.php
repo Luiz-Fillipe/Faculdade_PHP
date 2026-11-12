@@ -1,5 +1,8 @@
 <?php
 
+/** Endereço de contato exibido no portal (altere aqui para trocar em todas as páginas). */
+const CONTATO_EMAIL = 'contato@portalsi.edu.br';
+
 function mesPorExtenso($numero)
 {
     $meses = [

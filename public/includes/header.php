@@ -62,7 +62,7 @@ $slugsCategorias = array_column($categorias, 'slug');
             <nav class="topo-util-links" aria-label="Links institucionais">
                 <a href="<?php echo $basePublica; ?>index.php">Institucional</a>
                 <a href="<?php echo $basePublica; ?>evento.php">Agenda</a>
-                <a href="mailto:contato@portalsi.edu.br">Contato</a>
+                <a href="<?php echo $basePublica; ?>contato.php">Contato</a>
                 <?php if ($usuarioLogado): ?>
                     <a href="<?php echo $basePublica === '../' ? 'perfil.php' : 'admin/perfil.php'; ?>" title="Meu perfil">
                         <?php echo htmlspecialchars($nomeUsuario !== '' ? $nomeUsuario : 'Meu perfil', ENT_QUOTES, 'UTF-8'); ?>
