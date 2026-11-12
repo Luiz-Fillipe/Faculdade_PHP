@@ -71,7 +71,7 @@ Transparência: o código já traz uma estrutura inicial para imagem de capa, v�
    (ele **apaga e recria** as tabelas do banco selecionado; confira o banco antes)
 4. Crie o administrador de teste: `php database/criar_admin.php`
 5. Carregue os dados iniciais: `psql -U postgres -d portal_si -f database/seed.sql`
-   (opcional, para a demonstração: `psql -U postgres -d portal_si -f database/demo.sql` carrega 12 conteúdos fictícios só de texto)
+   (opcional, para a demonstração: `psql -U postgres -d portal_si -f database/demo.sql` carrega 12 conteúdos fictícios, com capas das imagens que já estão em `public/assets/img/noticias/`)
 6. Copie `.env.example` para `.env` e ajuste a conexão (veja a seção seguinte)
 7. Aponte o servidor web para a pasta `public/` e acesse, por exemplo, `http://localhost/portal-si/public/`
 
@@ -195,7 +195,6 @@ Os 6 casos restantes dependem de imagem, upload ou vídeo e estão suspensos nes
 - [Modelo de dados e dicionário](docs/modelo-de-dados.md)
 - [Apêndice B — Script do banco](docs/Apendice-B-Script-do-Banco.docx)
 - [Apêndice C — Dicionário de dados](docs/Apendice-C-Dicionario-de-Dados.docx)
-- [Slides da apresentação final](docs/Apresentacao-Portal-SI.pptx) e [roteiro de fala e demonstração](docs/roteiro-apresentacao.md)
 
 ## Referências
 
